@@ -3,7 +3,7 @@
     Paste this in your executor to load the script
 ]]
 
-local ScriptURL = "https://raw.githubusercontent.com/USERNAME/REPO/main/ultrafish.lua"
+local ScriptURL = "https://raw.githubusercontent.com/zevliandragovets/UltraFish/refs/heads/main/UI/main.lua"
 
 -- Loading UI
 local LoadingGui = Instance.new("ScreenGui")
@@ -101,4 +101,5 @@ else
     warn("[UltraFish Loader] HTTP error: " .. tostring(result))
     wait(3)
     LoadingGui:Destroy()
+
 end
