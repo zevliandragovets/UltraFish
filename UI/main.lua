@@ -412,22 +412,10 @@ local FishDatabase = {
 -- ╚══════════════════════════════════════════════════════════════╝
 
 local FishItLocations = {
-    "Fisherman Island",
-    "Ocean",
-    "Kohana Island",
-    "Kohana Volcano",
-    "Volcanic Depths",
-    "Coral Reef",
-    "Esoteric Depths",
-    "Tropical Grove",
-    "Crater Island",
-    "Lost Isle",
-    "Ancient Jungle",
-    "Ancient Ruins",
-    "Classic Island",
-    "Pirate Cove",
-    "Crystal Depths",
-    "Underground Cellar"
+    "Fisherman Island", "Ocean", "Kohana Island", "Kohana Volcano",
+    "Volcanic Depths", "Coral Reef", "Esoteric Depths", "Tropical Grove",
+    "Crater Island", "Lost Isle", "Ancient Jungle", "Ancient Ruins",
+    "Classic Island", "Pirate Cove", "Crystal Depths", "Underground Cellar"
 }
 
 -- ╔══════════════════════════════════════════════════════════════╗
@@ -435,19 +423,9 @@ local FishItLocations = {
 -- ╚══════════════════════════════════════════════════════════════╝
 
 local FishItRods = {
-    "Starter Rod",
-    "Toy Rod",
-    "Grass Rod",
-    "Lava Rod",
-    "Lucky Rod",
-    "Hazmat Rod",
-    "Ares Rod",
-    "Astral Rod",
-    "Bamboo Rod",
-    "Fluorescent Rod",
-    "Ghostfinn Rod",
-    "Angler Rod",
-    "Element Rod"
+    "Starter Rod", "Toy Rod", "Grass Rod", "Lava Rod", "Lucky Rod",
+    "Hazmat Rod", "Ares Rod", "Astral Rod", "Bamboo Rod",
+    "Fluorescent Rod", "Ghostfinn Rod", "Angler Rod", "Element Rod"
 }
 
 -- ╔══════════════════════════════════════════════════════════════╗
@@ -455,20 +433,10 @@ local FishItRods = {
 -- ╚══════════════════════════════════════════════════════════════╝
 
 local FishItEnchants = {
-    "Leprechaun I",
-    "Leprechaun II",
-    "Big Hunter I",
-    "Cursed I",
-    "Mutation Hunter I",
-    "Mutation Hunter II",
-    "Mutation Hunter III",
-    "Prismatic I",
-    "Empowered I",
-    "Reeler I",
-    "Secret Hunter",
-    "Shark Hunter",
-    "Fairy Hunter",
-    "Perfection"
+    "Leprechaun I", "Leprechaun II", "Big Hunter I", "Cursed I",
+    "Mutation Hunter I", "Mutation Hunter II", "Mutation Hunter III",
+    "Prismatic I", "Empowered I", "Reeler I", "Secret Hunter",
+    "Shark Hunter", "Fairy Hunter", "Perfection"
 }
 
 -- ╔══════════════════════════════════════════════════════════════╗
@@ -476,16 +444,8 @@ local FishItEnchants = {
 -- ╚══════════════════════════════════════════════════════════════╝
 
 local FishItAnimationSkins = {
-    "Default",
-    "Holy",
-    "Retro",
-    "Festive",
-    "Spooky",
-    "Ancient",
-    "Crystal"
+    "Default", "Holy", "Retro", "Festive", "Spooky", "Ancient", "Crystal"
 }
-
--- [REST OF THE SCRIPT CONTINUES WITH SERVICES, UI, AND FUNCTIONALITY - Same as before but with updated databases]
 
 -- ╔══════════════════════════════════════════════════════════════╗
 -- ║                   SERVICES & VARIABLES                         ║
@@ -503,55 +463,43 @@ local PlayerGui = Player:WaitForChild("PlayerGui")
 -- Script State
 local ScriptEnabled = true
 
+-- Active Toggle States
+local AutoFishEnabled = false
+local AutoSellEnabled = false
+local AutoShakeEnabled = false
+local PerfectCastEnabled = false
+
 -- Settings
 local Settings = {
-    -- Local Player
     WalkSpeed = 16,
     JumpPower = 50,
     FOV = 70,
-    
-    -- Player Accessories
     FishingRadar = false,
     DivingGear = false,
     AutoEquipRod = false,
-    
-    -- Legit Fishing
     PerfectCast = false,
     AutoFishing = false,
     AutoShake = false,
-    
-    -- Instant Fishing
     InstantFishing = false,
     InstantCompleteDelay = 3.4,
-    
-    -- Super Instant Fishing
     SuperInstantFishing = false,
     SuperInstantCancelDelay = 0.8,
     SuperInstantCompleteDelay = 0.3,
-    
-    -- Super Instant BETA
     BetaInstantFishing = false,
     BetaCancelDelay = 0.075,
     BetaCompleteDelay = 0.305,
-    
-    -- Auto Selling
     AutoSell = false,
     SellingType = "--",
     SellLimit = 100,
     SellDelay = 1,
-    
-    -- Fishing Zones
     FishingSpot = "Crystal Depths",
     AutoTeleport = false,
-    
-    -- Animation
     AnimationSkin = "Holy",
     EnableAnimation = false,
-    
-    -- FPS Boost
     DisableThunder = false,
     DisableVFX = false,
-    FPSBoost = false
+    FPSBoost = false,
+    FishingMode = "Legit"
 }
 
 -- Stats
@@ -560,13 +508,8 @@ local Stats = {
     TotalValue = 0,
     SessionTime = 0,
     RarityCounts = {
-        Common = 0,
-        Uncommon = 0,
-        Rare = 0,
-        Epic = 0,
-        Legendary = 0,
-        Mythic = 0,
-        SECRET = 0
+        Common = 0, Uncommon = 0, Rare = 0,
+        Epic = 0, Legendary = 0, Mythic = 0, SECRET = 0
     }
 }
 
@@ -582,55 +525,108 @@ print("✓ Status: Ready to Fish!")
 print("✓ discord.gg/getsades")
 print("═══════════════════════════════════════════════════════════")
 
--- ============================================
--- UTILITY FUNCTIONS
--- ============================================
-local function GetThemeColor(name)
-    local colors = {
-        Background = Color3.fromRGB(20, 20, 25),
-        Secondary = Color3.fromRGB(28, 28, 33),
-        Tertiary = Color3.fromRGB(35, 35, 40),
-        Primary = Color3.fromRGB(88, 101, 242),
-        Success = Color3.fromRGB(67, 181, 129),
-        Warning = Color3.fromRGB(250, 166, 26),
-        Danger = Color3.fromRGB(240, 71, 71),
-        TextPrimary = Color3.fromRGB(255, 255, 255),
-        TextSecondary = Color3.fromRGB(185, 187, 190),
-        TextMuted = Color3.fromRGB(114, 118, 125)
-    }
-    return colors[name] or Color3.fromRGB(255, 255, 255)
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   DARK MODERN THEME                            ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
+local Theme = {
+    Background      = Color3.fromRGB(12, 12, 16),
+    Sidebar         = Color3.fromRGB(16, 16, 22),
+    SidebarItem     = Color3.fromRGB(22, 22, 30),
+    SidebarActive   = Color3.fromRGB(34, 120, 82),
+    TopBar          = Color3.fromRGB(16, 16, 22),
+    ContentBg       = Color3.fromRGB(12, 12, 16),
+    Section         = Color3.fromRGB(20, 20, 28),
+    SectionHeader   = Color3.fromRGB(24, 24, 32),
+    InputField      = Color3.fromRGB(28, 28, 38),
+    InputFieldFocus = Color3.fromRGB(32, 32, 44),
+    ToggleOff       = Color3.fromRGB(40, 40, 52),
+    ToggleOn        = Color3.fromRGB(34, 160, 90),
+    Primary         = Color3.fromRGB(34, 160, 90),
+    PrimaryDark     = Color3.fromRGB(24, 120, 66),
+    Accent          = Color3.fromRGB(88, 101, 242),
+    Danger          = Color3.fromRGB(220, 60, 60),
+    Warning         = Color3.fromRGB(250, 166, 26),
+    TextPrimary     = Color3.fromRGB(240, 240, 245),
+    TextSecondary   = Color3.fromRGB(160, 165, 175),
+    TextMuted       = Color3.fromRGB(90, 95, 105),
+    TextDim         = Color3.fromRGB(65, 70, 80),
+    Border          = Color3.fromRGB(30, 30, 40),
+    Divider         = Color3.fromRGB(25, 25, 35),
+    Shadow          = Color3.fromRGB(0, 0, 0),
+    VersionBg       = Color3.fromRGB(28, 28, 38),
+    VersionText     = Color3.fromRGB(34, 160, 90),
+    SearchBg        = Color3.fromRGB(22, 22, 30),
+    ScrollBar       = Color3.fromRGB(45, 45, 58),
+    DropdownBg      = Color3.fromRGB(24, 24, 32),
+    DropdownHover   = Color3.fromRGB(34, 120, 82),
+    MinimizeIcon    = Color3.fromRGB(34, 160, 90),
+}
+
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   UTILITY FUNCTIONS                            ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
+local function Tween(instance, tweenInfo, props)
+    local t = TweenService:Create(instance, tweenInfo, props)
+    t:Play()
+    return t
 end
 
-local function CreateTween(instance, info, properties)
-    local tween = TweenService:Create(instance, info, properties)
-    tween:Play()
-    return tween
+local QuickTween = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local SmoothTween = TweenInfo.new(0.35, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
+local BounceTween = TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+
+local function AddCorner(parent, radius)
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, radius or 8)
+    c.Parent = parent
+    return c
 end
 
--- ============================================
--- FISHING CONTROLLER (FISH IT! SPECIFIC)
--- ============================================
+local function AddStroke(parent, color, thickness)
+    local s = Instance.new("UIStroke")
+    s.Color = color or Theme.Border
+    s.Thickness = thickness or 1
+    s.Transparency = 0.5
+    s.Parent = parent
+    return s
+end
+
+local function AddPadding(parent, t, l, r, b)
+    local p = Instance.new("UIPadding")
+    p.PaddingTop = UDim.new(0, t or 0)
+    p.PaddingLeft = UDim.new(0, l or 0)
+    p.PaddingRight = UDim.new(0, r or 0)
+    p.PaddingBottom = UDim.new(0, b or 0)
+    p.Parent = parent
+    return p
+end
+
+local function AddLayout(parent, direction, padding, sortOrder)
+    local l = Instance.new("UIListLayout")
+    l.FillDirection = direction or Enum.FillDirection.Vertical
+    l.Padding = UDim.new(0, padding or 4)
+    l.SortOrder = sortOrder or Enum.SortOrder.LayoutOrder
+    l.Parent = parent
+    return l
+end
+
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║              FISHING CONTROLLER (FISH IT! SPECIFIC)            ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
 local FishingController = {}
 FishingController.__index = FishingController
 
 function FishingController.new()
     local self = setmetatable({}, FishingController)
-    
-    -- Fish It! uses different remote structure
-    self.Remotes = {
-        Cast = nil,
-        Reel = nil,
-        Shake = nil,
-        Sell = nil
-    }
-    
+    self.Remotes = { Cast = nil, Reel = nil, Shake = nil, Sell = nil }
     self:FindRemotes()
-    
     return self
 end
 
 function FishingController:FindRemotes()
-    -- Fish It! remotes are typically in ReplicatedStorage
     local success, err = pcall(function()
         local remotes = ReplicatedStorage:WaitForChild("Remotes", 5)
         if remotes then
@@ -640,29 +636,18 @@ function FishingController:FindRemotes()
             self.Remotes.Sell = remotes:FindFirstChild("SellFish") or remotes:FindFirstChild("Sell")
         end
     end)
-    
-    if not success then
-        warn("Failed to find Fish It! remotes:", err)
-    end
+    if not success then warn("Failed to find Fish It! remotes:", err) end
 end
 
 function FishingController:GetRod()
     local character = Player.Character
     if not character then return nil end
-    
-    -- Fish It! rods are typically in the character or backpack
     for _, item in pairs(character:GetChildren()) do
-        if item:IsA("Tool") and string.find(item.Name:lower(), "rod") then
-            return item
-        end
+        if item:IsA("Tool") and string.find(item.Name:lower(), "rod") then return item end
     end
-    
     for _, item in pairs(Player.Backpack:GetChildren()) do
-        if item:IsA("Tool") and string.find(item.Name:lower(), "rod") then
-            return item
-        end
+        if item:IsA("Tool") and string.find(item.Name:lower(), "rod") then return item end
     end
-    
     return nil
 end
 
@@ -681,98 +666,87 @@ end
 
 function FishingController:Cast()
     if not self.Remotes.Cast then return false end
-    
-    local success = pcall(function()
-        if PerfectCastEnabled then
-            -- Perfect cast timing for Fish It!
-            wait(0.1)
-        end
-        self.Remotes.Cast:FireServer()
-    end)
-    
-    return success
+    return pcall(function() self.Remotes.Cast:FireServer() end)
 end
 
 function FishingController:Reel()
     if not self.Remotes.Reel then return false end
-    
-    local success = pcall(function()
-        self.Remotes.Reel:FireServer()
-    end)
-    
-    return success
+    return pcall(function() self.Remotes.Reel:FireServer() end)
 end
 
 function FishingController:Shake()
     if not self.Remotes.Shake then return false end
-    
-    local success = pcall(function()
-        self.Remotes.Shake:FireServer()
-    end)
-    
-    return success
+    return pcall(function() self.Remotes.Shake:FireServer() end)
 end
 
 function FishingController:Sell()
     if not self.Remotes.Sell then return false end
-    
-    local success = pcall(function()
-        -- Fish It! selling typically requires you to be near a Fish Monger NPC
-        if Settings.SellingType == "All" then
+    return pcall(function()
+        if Settings.SellingType == "All" or Settings.SellingType == "--" then
             self.Remotes.Sell:FireServer("All")
         else
-            -- Filter by rarity
             self.Remotes.Sell:FireServer(Settings.SellingType)
         end
     end)
-    
-    return success
 end
 
--- Initialize controller
 local Controller = FishingController.new()
 
--- ============================================
--- AUTO FISH LOOP
--- ============================================
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   CHARACTER UPDATES                            ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
+local function UpdateCharacter()
+    local character = Player.Character
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.WalkSpeed = Settings.WalkSpeed
+            humanoid.JumpPower = Settings.JumpPower
+        end
+    end
+    local camera = workspace.CurrentCamera
+    if camera then camera.FieldOfView = Settings.FOV end
+end
+
+Player.CharacterAdded:Connect(UpdateCharacter)
+
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   AUTO FISH / SELL LOOPS                       ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
 local function AutoFishLoop()
     spawn(function()
         while ScriptEnabled do
-            if AutoFishEnabled and Settings.AutoEquipRod then
-                Controller:EquipRod()
+            if AutoFishEnabled then
+                if Settings.AutoEquipRod then Controller:EquipRod() end
                 
                 if Settings.FishingMode == "Instant" then
                     Controller:Cast()
-                    wait(Settings.InstantDelay)
+                    wait(Settings.InstantCompleteDelay)
                     Controller:Reel()
                     Stats.TotalCaught = Stats.TotalCaught + 1
-                    
                 elseif Settings.FishingMode == "Super Instant" then
                     Controller:Cast()
                     wait(Settings.SuperInstantCancelDelay)
                     Controller:Reel()
                     wait(Settings.SuperInstantCompleteDelay)
                     Stats.TotalCaught = Stats.TotalCaught + 1
-                    
                 elseif Settings.FishingMode == "Beta Instant" then
                     Controller:Cast()
                     wait(Settings.BetaCancelDelay)
                     Controller:Reel()
                     wait(Settings.BetaCompleteDelay)
                     Stats.TotalCaught = Stats.TotalCaught + 1
-                    
                 else
-                    -- Legit mode
                     Controller:Cast()
                     wait(math.random(2, 4))
-                    
                     if AutoShakeEnabled then
                         for i = 1, math.random(3, 6) do
                             Controller:Shake()
                             wait(0.1)
                         end
                     end
-                    
                     Controller:Reel()
                     Stats.TotalCaught = Stats.TotalCaught + 1
                 end
@@ -782,9 +756,6 @@ local function AutoFishLoop()
     end)
 end
 
--- ============================================
--- AUTO SELL LOOP
--- ============================================
 local function AutoSellLoop()
     spawn(function()
         while ScriptEnabled do
@@ -797,296 +768,590 @@ local function AutoSellLoop()
     end)
 end
 
--- ============================================
--- CHARACTER UPDATES
--- ============================================
-local function UpdateCharacter()
-    local character = Player.Character
-    if character then
-        local humanoid = character:FindFirstChild("Humanoid")
-        if humanoid then
-            humanoid.WalkSpeed = Settings.WalkSpeed
-            humanoid.JumpPower = Settings.JumpPower
-        end
-    end
-    
-    -- Update camera FOV
-    local camera = workspace.CurrentCamera
-    if camera then
-        camera.FieldOfView = Settings.FOV
-    end
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   MAIN UI CREATION                             ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
+-- Destroy old UI if exists
+if PlayerGui:FindFirstChild("AtomicHubFishIt") then
+    PlayerGui:FindFirstChild("AtomicHubFishIt"):Destroy()
 end
 
-Player.CharacterAdded:Connect(UpdateCharacter)
-
--- ============================================
--- UI CREATION
--- ============================================
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "FishItScript"
+ScreenGui.Name = "AtomicHubFishIt"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.DisplayOrder = 999
 ScreenGui.Parent = PlayerGui
 
--- Main Frame
+-- ════════════════════════════════════════════════════
+-- MINIMIZE FLOATING ICON (hidden initially)
+-- ════════════════════════════════════════════════════
+
+local MinIcon = Instance.new("ImageButton")
+MinIcon.Name = "MinimizeIcon"
+MinIcon.Size = UDim2.new(0, 50, 0, 50)
+MinIcon.Position = UDim2.new(0, 20, 0.5, -25)
+MinIcon.BackgroundColor3 = Theme.SidebarActive
+MinIcon.BorderSizePixel = 0
+MinIcon.Image = "rbxassetid://6031075938"
+MinIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
+MinIcon.ScaleType = Enum.ScaleType.Fit
+MinIcon.Visible = false
+MinIcon.ZIndex = 100
+MinIcon.Parent = ScreenGui
+AddCorner(MinIcon, 14)
+AddStroke(MinIcon, Theme.Primary, 2)
+
+-- Glow effect for minimize icon
+local MinIconGlow = Instance.new("ImageLabel")
+MinIconGlow.Name = "Glow"
+MinIconGlow.Size = UDim2.new(1.5, 0, 1.5, 0)
+MinIconGlow.Position = UDim2.new(-0.25, 0, -0.25, 0)
+MinIconGlow.BackgroundTransparency = 1
+MinIconGlow.Image = "rbxassetid://5028857084"
+MinIconGlow.ImageColor3 = Theme.Primary
+MinIconGlow.ImageTransparency = 0.7
+MinIconGlow.ZIndex = 99
+MinIconGlow.Parent = MinIcon
+
+-- Draggable minimize icon
+local minIconDragging = false
+local minIconDragStart, minIconStartPos
+
+MinIcon.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        minIconDragging = true
+        minIconDragStart = input.Position
+        minIconStartPos = MinIcon.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                minIconDragging = false
+            end
+        end)
+    end
+end)
+
+local minIconMoved = false
+UserInputService.InputChanged:Connect(function(input)
+    if minIconDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - minIconDragStart
+        if delta.Magnitude > 5 then minIconMoved = true end
+        MinIcon.Position = UDim2.new(
+            minIconStartPos.X.Scale, minIconStartPos.X.Offset + delta.X,
+            minIconStartPos.Y.Scale, minIconStartPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+-- ════════════════════════════════════════════════════
+-- MAIN FRAME
+-- ════════════════════════════════════════════════════
+
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 620, 0, 480)
-MainFrame.Position = UDim2.new(0.5, -310, 0.5, -240)
-MainFrame.BackgroundColor3 = GetThemeColor("Background")
+MainFrame.Size = UDim2.new(0, 640, 0, 440)
+MainFrame.Position = UDim2.new(0.5, -320, 0.5, -220)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Theme.Background
 MainFrame.BorderSizePixel = 0
 MainFrame.ClipsDescendants = true
 MainFrame.Parent = ScreenGui
+AddCorner(MainFrame, 10)
+AddStroke(MainFrame, Theme.Border, 1)
 
--- Rounded corners
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 8)
-MainCorner.Parent = MainFrame
+-- Shadow behind MainFrame
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.Size = UDim2.new(1, 40, 1, 40)
+Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1
+Shadow.Image = "rbxassetid://5028857084"
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.4
+Shadow.ZIndex = -1
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(24, 24, 276, 276)
+Shadow.Parent = MainFrame
 
--- Top Bar
+-- ════════════════════════════════════════════════════
+-- TOP BAR
+-- ════════════════════════════════════════════════════
+
 local TopBar = Instance.new("Frame")
 TopBar.Name = "TopBar"
-TopBar.Size = UDim2.new(1, 0, 0, 45)
-TopBar.BackgroundColor3 = GetThemeColor("Secondary")
+TopBar.Size = UDim2.new(1, 0, 0, 40)
+TopBar.BackgroundColor3 = Theme.TopBar
 TopBar.BorderSizePixel = 0
 TopBar.Parent = MainFrame
 
--- Logo
+local TopBarDivider = Instance.new("Frame")
+TopBarDivider.Size = UDim2.new(1, 0, 0, 1)
+TopBarDivider.Position = UDim2.new(0, 0, 1, -1)
+TopBarDivider.BackgroundColor3 = Theme.Divider
+TopBarDivider.BorderSizePixel = 0
+TopBarDivider.Parent = TopBar
+
+-- Logo icon
 local Logo = Instance.new("ImageLabel")
 Logo.Name = "Logo"
-Logo.Size = UDim2.new(0, 30, 0, 30)
-Logo.Position = UDim2.new(0, 10, 0.5, -15)
+Logo.Size = UDim2.new(0, 22, 0, 22)
+Logo.Position = UDim2.new(0, 12, 0.5, -11)
 Logo.BackgroundTransparency = 1
 Logo.Image = "rbxassetid://6031075938"
+Logo.ImageColor3 = Color3.fromRGB(255, 255, 255)
 Logo.Parent = TopBar
 
--- Title
-local Title = Instance.new("TextLabel")
-Title.Name = "Title"
-Title.Size = UDim2.new(0, 200, 1, 0)
-Title.Position = UDim2.new(0, 45, 0, 0)
-Title.BackgroundTransparency = 1
-Title.Text = "FISH IT! SCRIPT"
-Title.TextColor3 = GetThemeColor("TextPrimary")
-Title.TextSize = 16
-Title.Font = Enum.Font.GothamBold
-Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.Parent = TopBar
+-- Title Text
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Name = "Title"
+TitleLabel.Size = UDim2.new(0, 90, 1, 0)
+TitleLabel.Position = UDim2.new(0, 38, 0, 0)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "Atomic Hub"
+TitleLabel.TextColor3 = Theme.TextPrimary
+TitleLabel.TextSize = 14
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+TitleLabel.Parent = TopBar
 
 -- Version Badge
 local VersionBadge = Instance.new("Frame")
 VersionBadge.Name = "VersionBadge"
-VersionBadge.Size = UDim2.new(0, 50, 0, 20)
-VersionBadge.Position = UDim2.new(0, 250, 0.5, -10)
-VersionBadge.BackgroundColor3 = GetThemeColor("Primary")
+VersionBadge.Size = UDim2.new(0, 62, 0, 22)
+VersionBadge.Position = UDim2.new(0, 132, 0.5, -11)
+VersionBadge.BackgroundColor3 = Theme.VersionBg
 VersionBadge.BorderSizePixel = 0
 VersionBadge.Parent = TopBar
+AddCorner(VersionBadge, 6)
+AddStroke(VersionBadge, Theme.Border, 1)
 
-local VersionCorner = Instance.new("UICorner")
-VersionCorner.CornerRadius = UDim.new(0, 4)
-VersionCorner.Parent = VersionBadge
+local VersionIcon = Instance.new("TextLabel")
+VersionIcon.Size = UDim2.new(0, 16, 1, 0)
+VersionIcon.Position = UDim2.new(0, 5, 0, 0)
+VersionIcon.BackgroundTransparency = 1
+VersionIcon.Text = "⚡"
+VersionIcon.TextColor3 = Theme.VersionText
+VersionIcon.TextSize = 10
+VersionIcon.Font = Enum.Font.GothamBold
+VersionIcon.Parent = VersionBadge
 
 local VersionText = Instance.new("TextLabel")
-VersionText.Size = UDim2.new(1, 0, 1, 0)
+VersionText.Size = UDim2.new(1, -20, 1, 0)
+VersionText.Position = UDim2.new(0, 18, 0, 0)
 VersionText.BackgroundTransparency = 1
-VersionText.Text = "v1.0"
-VersionText.TextColor3 = Color3.fromRGB(255, 255, 255)
-VersionText.TextSize = 12
+VersionText.Text = "v0.3.9.8"
+VersionText.TextColor3 = Theme.VersionText
+VersionText.TextSize = 11
 VersionText.Font = Enum.Font.GothamBold
+VersionText.TextXAlignment = Enum.TextXAlignment.Left
 VersionText.Parent = VersionBadge
 
+-- Top Bar Icons (center-right area)
+local TopBarIcons = Instance.new("Frame")
+TopBarIcons.Name = "TopBarIcons"
+TopBarIcons.Size = UDim2.new(0, 160, 0, 30)
+TopBarIcons.Position = UDim2.new(0.5, -30, 0.5, -15)
+TopBarIcons.BackgroundTransparency = 1
+TopBarIcons.Parent = TopBar
+
+local iconLayout = Instance.new("UIListLayout")
+iconLayout.FillDirection = Enum.FillDirection.Horizontal
+iconLayout.Padding = UDim.new(0, 6)
+iconLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+iconLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+iconLayout.Parent = TopBarIcons
+
+local topIcons = {"🏠", "👁", "🔔", "🔊"}
+for _, ico in ipairs(topIcons) do
+    local iconBtn = Instance.new("TextButton")
+    iconBtn.Size = UDim2.new(0, 28, 0, 28)
+    iconBtn.BackgroundColor3 = Theme.SidebarItem
+    iconBtn.BackgroundTransparency = 0.5
+    iconBtn.BorderSizePixel = 0
+    iconBtn.Text = ico
+    iconBtn.TextSize = 14
+    iconBtn.TextColor3 = Theme.TextSecondary
+    iconBtn.Font = Enum.Font.Gotham
+    iconBtn.AutoButtonColor = false
+    iconBtn.Parent = TopBarIcons
+    AddCorner(iconBtn, 6)
+    
+    iconBtn.MouseEnter:Connect(function()
+        Tween(iconBtn, QuickTween, {BackgroundTransparency = 0})
+    end)
+    iconBtn.MouseLeave:Connect(function()
+        Tween(iconBtn, QuickTween, {BackgroundTransparency = 0.5})
+    end)
+end
+
+-- Window Control Buttons (minimize, maximize, close)
+local WinControls = Instance.new("Frame")
+WinControls.Name = "WinControls"
+WinControls.Size = UDim2.new(0, 90, 0, 30)
+WinControls.Position = UDim2.new(1, -100, 0.5, -15)
+WinControls.BackgroundTransparency = 1
+WinControls.Parent = TopBar
+
+local winLayout = Instance.new("UIListLayout")
+winLayout.FillDirection = Enum.FillDirection.Horizontal
+winLayout.Padding = UDim.new(0, 4)
+winLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+winLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+winLayout.Parent = WinControls
+
+-- Minimize Button
+local MinimizeBtn = Instance.new("TextButton")
+MinimizeBtn.Name = "MinimizeBtn"
+MinimizeBtn.Size = UDim2.new(0, 26, 0, 26)
+MinimizeBtn.BackgroundColor3 = Theme.SidebarItem
+MinimizeBtn.BorderSizePixel = 0
+MinimizeBtn.Text = "—"
+MinimizeBtn.TextSize = 14
+MinimizeBtn.TextColor3 = Theme.TextSecondary
+MinimizeBtn.Font = Enum.Font.GothamBold
+MinimizeBtn.AutoButtonColor = false
+MinimizeBtn.Parent = WinControls
+AddCorner(MinimizeBtn, 6)
+
+-- Maximize placeholder
+local MaxBtn = Instance.new("TextButton")
+MaxBtn.Size = UDim2.new(0, 26, 0, 26)
+MaxBtn.BackgroundColor3 = Theme.SidebarItem
+MaxBtn.BorderSizePixel = 0
+MaxBtn.Text = "□"
+MaxBtn.TextSize = 14
+MaxBtn.TextColor3 = Theme.TextSecondary
+MaxBtn.Font = Enum.Font.GothamBold
+MaxBtn.AutoButtonColor = false
+MaxBtn.Parent = WinControls
+AddCorner(MaxBtn, 6)
+
 -- Close Button
-local CloseButton = Instance.new("TextButton")
-CloseButton.Name = "CloseButton"
-CloseButton.Size = UDim2.new(0, 30, 0, 30)
-CloseButton.Position = UDim2.new(1, -40, 0.5, -15)
-CloseButton.BackgroundColor3 = GetThemeColor("Danger")
-CloseButton.BorderSizePixel = 0
-CloseButton.Text = "✕"
-CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextSize = 18
-CloseButton.Font = Enum.Font.GothamBold
-CloseButton.Parent = TopBar
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Name = "CloseBtn"
+CloseBtn.Size = UDim2.new(0, 26, 0, 26)
+CloseBtn.BackgroundColor3 = Theme.Danger
+CloseBtn.BackgroundTransparency = 0.6
+CloseBtn.BorderSizePixel = 0
+CloseBtn.Text = "✕"
+CloseBtn.TextSize = 13
+CloseBtn.TextColor3 = Theme.TextPrimary
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.AutoButtonColor = false
+CloseBtn.Parent = WinControls
+AddCorner(CloseBtn, 6)
 
-local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 6)
-CloseCorner.Parent = CloseButton
+-- Hover effects for window controls
+for _, btn in pairs({MinimizeBtn, MaxBtn, CloseBtn}) do
+    btn.MouseEnter:Connect(function()
+        if btn == CloseBtn then
+            Tween(btn, QuickTween, {BackgroundTransparency = 0})
+        else
+            Tween(btn, QuickTween, {BackgroundColor3 = Theme.SidebarActive})
+        end
+    end)
+    btn.MouseLeave:Connect(function()
+        if btn == CloseBtn then
+            Tween(btn, QuickTween, {BackgroundTransparency = 0.6})
+        else
+            Tween(btn, QuickTween, {BackgroundColor3 = Theme.SidebarItem})
+        end
+    end)
+end
 
-CloseButton.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-    ScriptEnabled = false
+-- Minimize functionality
+MinimizeBtn.MouseButton1Click:Connect(function()
+    Tween(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+        Size = UDim2.new(0, 0, 0, 0)
+    }).Completed:Wait()
+    MainFrame.Visible = false
+    MinIcon.Visible = true
+    MinIcon.Size = UDim2.new(0, 0, 0, 0)
+    Tween(MinIcon, BounceTween, {Size = UDim2.new(0, 50, 0, 50)})
 end)
 
--- Sidebar
+-- Restore from minimize icon
+MinIcon.MouseButton1Click:Connect(function()
+    if minIconMoved then
+        minIconMoved = false
+        return
+    end
+    Tween(MinIcon, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Size = UDim2.new(0, 0, 0, 0)}).Completed:Wait()
+    MinIcon.Visible = false
+    MainFrame.Visible = true
+    MainFrame.Size = UDim2.new(0, 0, 0, 0)
+    Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 640, 0, 440)})
+end)
+
+-- Close functionality
+CloseBtn.MouseButton1Click:Connect(function()
+    ScriptEnabled = false
+    Tween(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+        Size = UDim2.new(0, 0, 0, 0)
+    }).Completed:Wait()
+    ScreenGui:Destroy()
+end)
+
+-- Draggable Main Frame
+local dragging, dragInput, dragStart, startPos = false, nil, nil, nil
+TopBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then dragging = false end
+        end)
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- ════════════════════════════════════════════════════
+-- SIDEBAR
+-- ════════════════════════════════════════════════════
+
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
-Sidebar.Size = UDim2.new(0, 190, 1, -45)
-Sidebar.Position = UDim2.new(0, 0, 0, 45)
-Sidebar.BackgroundColor3 = GetThemeColor("Secondary")
+Sidebar.Size = UDim2.new(0, 160, 1, -40)
+Sidebar.Position = UDim2.new(0, 0, 0, 40)
+Sidebar.BackgroundColor3 = Theme.Sidebar
 Sidebar.BorderSizePixel = 0
 Sidebar.Parent = MainFrame
 
+local SidebarDivider = Instance.new("Frame")
+SidebarDivider.Size = UDim2.new(0, 1, 1, 0)
+SidebarDivider.Position = UDim2.new(1, -1, 0, 0)
+SidebarDivider.BackgroundColor3 = Theme.Divider
+SidebarDivider.BorderSizePixel = 0
+SidebarDivider.Parent = Sidebar
+
 -- Search Bar
+local SearchFrame = Instance.new("Frame")
+SearchFrame.Size = UDim2.new(1, -16, 0, 32)
+SearchFrame.Position = UDim2.new(0, 8, 0, 8)
+SearchFrame.BackgroundColor3 = Theme.SearchBg
+SearchFrame.BorderSizePixel = 0
+SearchFrame.Parent = Sidebar
+AddCorner(SearchFrame, 6)
+AddStroke(SearchFrame, Theme.Border, 1)
+
+local SearchIcon = Instance.new("TextLabel")
+SearchIcon.Size = UDim2.new(0, 28, 1, 0)
+SearchIcon.Position = UDim2.new(0, 2, 0, 0)
+SearchIcon.BackgroundTransparency = 1
+SearchIcon.Text = "🔍"
+SearchIcon.TextSize = 12
+SearchIcon.TextColor3 = Theme.TextMuted
+SearchIcon.Font = Enum.Font.Gotham
+SearchIcon.Parent = SearchFrame
+
 local SearchBar = Instance.new("TextBox")
-SearchBar.Name = "SearchBar"
-SearchBar.Size = UDim2.new(1, -20, 0, 30)
-SearchBar.Position = UDim2.new(0, 10, 0, 10)
-SearchBar.BackgroundColor3 = GetThemeColor("Tertiary")
-SearchBar.BorderSizePixel = 0
-SearchBar.PlaceholderText = "Search..."
+SearchBar.Size = UDim2.new(1, -32, 1, 0)
+SearchBar.Position = UDim2.new(0, 30, 0, 0)
+SearchBar.BackgroundTransparency = 1
+SearchBar.PlaceholderText = "Search"
 SearchBar.Text = ""
-SearchBar.TextColor3 = GetThemeColor("TextPrimary")
-SearchBar.PlaceholderColor3 = GetThemeColor("TextMuted")
-SearchBar.TextSize = 14
+SearchBar.TextColor3 = Theme.TextPrimary
+SearchBar.PlaceholderColor3 = Theme.TextMuted
+SearchBar.TextSize = 12
 SearchBar.Font = Enum.Font.Gotham
 SearchBar.TextXAlignment = Enum.TextXAlignment.Left
 SearchBar.ClearTextOnFocus = false
-SearchBar.Parent = Sidebar
+SearchBar.Parent = SearchFrame
 
-local SearchPadding = Instance.new("UIPadding")
-SearchPadding.PaddingLeft = UDim.new(0, 10)
-SearchPadding.Parent = SearchBar
+-- Navigation Scroll
+local NavScroll = Instance.new("ScrollingFrame")
+NavScroll.Name = "NavScroll"
+NavScroll.Size = UDim2.new(1, 0, 1, -50)
+NavScroll.Position = UDim2.new(0, 0, 0, 48)
+NavScroll.BackgroundTransparency = 1
+NavScroll.BorderSizePixel = 0
+NavScroll.ScrollBarThickness = 3
+NavScroll.ScrollBarImageColor3 = Theme.ScrollBar
+NavScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+NavScroll.Parent = Sidebar
 
-local SearchCorner = Instance.new("UICorner")
-SearchCorner.CornerRadius = UDim.new(0, 6)
-SearchCorner.Parent = SearchBar
+local NavLayout = AddLayout(NavScroll, Enum.FillDirection.Vertical, 2)
+AddPadding(NavScroll, 4, 8, 8, 4)
 
--- Navigation List
-local NavList = Instance.new("ScrollingFrame")
-NavList.Name = "NavList"
-NavList.Size = UDim2.new(1, 0, 1, -50)
-NavList.Position = UDim2.new(0, 0, 0, 50)
-NavList.BackgroundTransparency = 1
-NavList.BorderSizePixel = 0
-NavList.ScrollBarThickness = 4
-NavList.ScrollBarImageColor3 = GetThemeColor("Primary")
-NavList.CanvasSize = UDim2.new(0, 0, 0, 0)
-NavList.Parent = Sidebar
+-- ════════════════════════════════════════════════════
+-- CONTENT AREA
+-- ════════════════════════════════════════════════════
 
-local NavListLayout = Instance.new("UIListLayout")
-NavListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-NavListLayout.Padding = UDim.new(0, 2)
-NavListLayout.Parent = NavList
-
--- Content Area
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
-ContentArea.Size = UDim2.new(1, -190, 1, -45)
-ContentArea.Position = UDim2.new(0, 190, 0, 45)
-ContentArea.BackgroundColor3 = GetThemeColor("Background")
+ContentArea.Size = UDim2.new(1, -160, 1, -40)
+ContentArea.Position = UDim2.new(0, 160, 0, 40)
+ContentArea.BackgroundColor3 = Theme.ContentBg
 ContentArea.BorderSizePixel = 0
+ContentArea.ClipsDescendants = true
 ContentArea.Parent = MainFrame
 
--- Pages Container
-local PagesContainer = Instance.new("Frame")
-PagesContainer.Name = "PagesContainer"
-PagesContainer.Size = UDim2.new(1, 0, 1, 0)
-PagesContainer.BackgroundTransparency = 1
-PagesContainer.Parent = ContentArea
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   UI COMPONENT BUILDERS                        ║
+-- ╚══════════════════════════════════════════════════════════════╝
 
--- ============================================
--- UI COMPONENTS
--- ============================================
+local Pages = {}
+local NavButtons = {}
+local currentPageName = nil
 
--- Create Navigation Button
-local function CreateNavButton(name, icon, order)
-    local button = Instance.new("TextButton")
-    button.Name = name .. "Button"
-    button.Size = UDim2.new(1, -10, 0, 35)
-    button.BackgroundColor3 = GetThemeColor("Tertiary")
-    button.BorderSizePixel = 0
-    button.Text = ""
-    button.AutoButtonColor = false
-    button.LayoutOrder = order
-    button.Parent = NavList
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = button
+-- Create Nav Button
+local function CreateNavButton(name, icon, order, group)
+    local btn = Instance.new("TextButton")
+    btn.Name = name .. "Nav"
+    btn.Size = UDim2.new(1, 0, 0, 34)
+    btn.BackgroundColor3 = Theme.SidebarItem
+    btn.BackgroundTransparency = 1
+    btn.BorderSizePixel = 0
+    btn.Text = ""
+    btn.AutoButtonColor = false
+    btn.LayoutOrder = order
+    btn.Parent = NavScroll
+    AddCorner(btn, 6)
     
     local iconLabel = Instance.new("TextLabel")
-    iconLabel.Size = UDim2.new(0, 30, 1, 0)
-    iconLabel.Position = UDim2.new(0, 5, 0, 0)
+    iconLabel.Size = UDim2.new(0, 28, 1, 0)
+    iconLabel.Position = UDim2.new(0, 6, 0, 0)
     iconLabel.BackgroundTransparency = 1
     iconLabel.Text = icon
-    iconLabel.TextColor3 = GetThemeColor("TextSecondary")
-    iconLabel.TextSize = 16
-    iconLabel.Font = Enum.Font.GothamBold
-    iconLabel.Parent = button
+    iconLabel.TextSize = 14
+    iconLabel.TextColor3 = Theme.TextMuted
+    iconLabel.Font = Enum.Font.Gotham
+    iconLabel.Parent = btn
     
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -40, 1, 0)
-    label.Position = UDim2.new(0, 35, 0, 0)
-    label.BackgroundTransparency = 1
-    label.Text = name
-    label.TextColor3 = GetThemeColor("TextSecondary")
-    label.TextSize = 13
-    label.Font = Enum.Font.Gotham
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.Parent = button
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Name = "Label"
+    textLabel.Size = UDim2.new(1, -38, 1, 0)
+    textLabel.Position = UDim2.new(0, 34, 0, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.Text = name
+    textLabel.TextSize = 13
+    textLabel.TextColor3 = Theme.TextSecondary
+    textLabel.Font = Enum.Font.Gotham
+    textLabel.TextXAlignment = Enum.TextXAlignment.Left
+    textLabel.Parent = btn
     
-    return button
+    -- Active indicator bar
+    local activeBar = Instance.new("Frame")
+    activeBar.Name = "ActiveBar"
+    activeBar.Size = UDim2.new(0, 3, 0.6, 0)
+    activeBar.Position = UDim2.new(0, 0, 0.2, 0)
+    activeBar.BackgroundColor3 = Theme.Primary
+    activeBar.BorderSizePixel = 0
+    activeBar.Visible = false
+    activeBar.Parent = btn
+    AddCorner(activeBar, 2)
+    
+    btn.MouseEnter:Connect(function()
+        if currentPageName ~= name then
+            Tween(btn, QuickTween, {BackgroundTransparency = 0.3})
+        end
+    end)
+    btn.MouseLeave:Connect(function()
+        if currentPageName ~= name then
+            Tween(btn, QuickTween, {BackgroundTransparency = 1})
+        end
+    end)
+    
+    NavButtons[name] = {Button = btn, Icon = iconLabel, Label = textLabel, ActiveBar = activeBar}
+    return btn
 end
 
--- Create Page
+-- Create Page Container
 local function CreatePage(name)
     local page = Instance.new("ScrollingFrame")
     page.Name = name .. "Page"
     page.Size = UDim2.new(1, 0, 1, 0)
     page.BackgroundTransparency = 1
     page.BorderSizePixel = 0
-    page.ScrollBarThickness = 6
-    page.ScrollBarImageColor3 = GetThemeColor("Primary")
+    page.ScrollBarThickness = 4
+    page.ScrollBarImageColor3 = Theme.ScrollBar
     page.CanvasSize = UDim2.new(0, 0, 0, 0)
     page.Visible = false
-    page.Parent = PagesContainer
+    page.Parent = ContentArea
     
-    local layout = Instance.new("UIListLayout")
-    layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.Padding = UDim.new(0, 10)
-    layout.Parent = page
+    local layout = AddLayout(page, Enum.FillDirection.Vertical, 8)
+    AddPadding(page, 10, 12, 12, 10)
     
     layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 20)
+        page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 24)
     end)
     
-    local padding = Instance.new("UIPadding")
-    padding.PaddingTop = UDim.new(0, 10)
-    padding.PaddingLeft = UDim.new(0, 15)
-    padding.PaddingRight = UDim.new(0, 15)
-    padding.PaddingBottom = UDim.new(0, 10)
-    padding.Parent = page
-    
+    Pages[name] = page
     return page
 end
 
--- Create Section
-local function CreateSection(parent, title, order)
+-- Show Page
+local function ShowPage(name)
+    -- Hide all pages
+    for pName, pg in pairs(Pages) do
+        pg.Visible = false
+    end
+    -- Deactivate all nav buttons
+    for nName, nav in pairs(NavButtons) do
+        nav.Button.BackgroundTransparency = 1
+        nav.Button.BackgroundColor3 = Theme.SidebarItem
+        nav.Label.TextColor3 = Theme.TextSecondary
+        nav.Label.Font = Enum.Font.Gotham
+        nav.Icon.TextColor3 = Theme.TextMuted
+        nav.ActiveBar.Visible = false
+    end
+    -- Activate selected
+    if Pages[name] then
+        Pages[name].Visible = true
+    end
+    if NavButtons[name] then
+        local nav = NavButtons[name]
+        nav.Button.BackgroundTransparency = 0
+        nav.Button.BackgroundColor3 = Theme.SidebarActive
+        nav.Label.TextColor3 = Theme.TextPrimary
+        nav.Label.Font = Enum.Font.GothamBold
+        nav.Icon.TextColor3 = Theme.TextPrimary
+        nav.ActiveBar.Visible = true
+    end
+    currentPageName = name
+end
+
+-- ════════════════════════════════════════════════════
+-- SECTION BUILDER (Collapsible)
+-- ════════════════════════════════════════════════════
+
+local function CreateSection(parent, title, order, defaultExpanded)
     local section = Instance.new("Frame")
-    section.Name = title .. "Section"
-    section.Size = UDim2.new(1, 0, 0, 40)
-    section.BackgroundColor3 = GetThemeColor("Secondary")
+    section.Name = title:gsub(" ", "") .. "Section"
+    section.BackgroundColor3 = Theme.Section
     section.BorderSizePixel = 0
     section.LayoutOrder = order
+    section.ClipsDescendants = true
+    section.AutomaticSize = Enum.AutomaticSize.None
     section.Parent = parent
+    AddCorner(section, 8)
     
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = section
-    
+    -- Header
     local header = Instance.new("TextButton")
     header.Name = "Header"
-    header.Size = UDim2.new(1, 0, 0, 40)
-    header.BackgroundTransparency = 1
+    header.Size = UDim2.new(1, 0, 0, 42)
+    header.BackgroundColor3 = Theme.SectionHeader
+    header.BackgroundTransparency = 0.5
+    header.BorderSizePixel = 0
     header.Text = ""
+    header.AutoButtonColor = false
     header.Parent = section
+    AddCorner(header, 8)
     
     local titleLabel = Instance.new("TextLabel")
     titleLabel.Size = UDim2.new(1, -50, 1, 0)
-    titleLabel.Position = UDim2.new(0, 15, 0, 0)
+    titleLabel.Position = UDim2.new(0, 16, 0, 0)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Text = title
-    titleLabel.TextColor3 = GetThemeColor("TextPrimary")
+    titleLabel.TextColor3 = Theme.TextPrimary
     titleLabel.TextSize = 14
     titleLabel.Font = Enum.Font.GothamBold
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -1095,493 +1360,636 @@ local function CreateSection(parent, title, order)
     local arrow = Instance.new("TextLabel")
     arrow.Name = "Arrow"
     arrow.Size = UDim2.new(0, 20, 0, 20)
-    arrow.Position = UDim2.new(1, -30, 0.5, -10)
+    arrow.Position = UDim2.new(1, -32, 0.5, -10)
     arrow.BackgroundTransparency = 1
-    arrow.Text = "▼"
-    arrow.TextColor3 = GetThemeColor("TextSecondary")
-    arrow.TextSize = 12
+    arrow.Text = defaultExpanded and "∧" or "∨"
+    arrow.TextColor3 = Theme.TextSecondary
+    arrow.TextSize = 16
     arrow.Font = Enum.Font.GothamBold
-    arrow.Rotation = 0
     arrow.Parent = header
     
+    -- Content Container
     local content = Instance.new("Frame")
     content.Name = "Content"
     content.Size = UDim2.new(1, 0, 0, 0)
-    content.Position = UDim2.new(0, 0, 0, 40)
+    content.Position = UDim2.new(0, 0, 0, 42)
     content.BackgroundTransparency = 1
     content.ClipsDescendants = true
     content.Parent = section
     
-    local contentLayout = Instance.new("UIListLayout")
-    contentLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    contentLayout.Padding = UDim.new(0, 8)
-    contentLayout.Parent = content
+    local contentLayout = AddLayout(content, Enum.FillDirection.Vertical, 6)
+    AddPadding(content, 6, 16, 16, 10)
     
-    local contentPadding = Instance.new("UIPadding")
-    contentPadding.PaddingTop = UDim.new(0, 10)
-    contentPadding.PaddingLeft = UDim.new(0, 15)
-    contentPadding.PaddingRight = UDim.new(0, 15)
-    contentPadding.PaddingBottom = UDim.new(0, 10)
-    contentPadding.Parent = content
+    local expanded = defaultExpanded or false
     
-    local expanded = false
+    local function updateSize()
+        local contentHeight = contentLayout.AbsoluteContentSize.Y + 16
+        if expanded then
+            section.Size = UDim2.new(1, 0, 0, 42 + contentHeight)
+            content.Size = UDim2.new(1, 0, 0, contentHeight)
+        else
+            section.Size = UDim2.new(1, 0, 0, 42)
+            content.Size = UDim2.new(1, 0, 0, 0)
+        end
+    end
+    
+    -- Initial size
+    if expanded then
+        task.defer(function()
+            wait(0.05)
+            updateSize()
+        end)
+    else
+        section.Size = UDim2.new(1, 0, 0, 42)
+    end
     
     header.MouseButton1Click:Connect(function()
         expanded = not expanded
+        arrow.Text = expanded and "∧" or "∨"
         
-        local targetHeight = expanded and (contentLayout.AbsoluteContentSize.Y + 60) or 40
-        local targetRotation = expanded and 180 or 0
+        local contentHeight = contentLayout.AbsoluteContentSize.Y + 16
+        local targetSectionH = expanded and (42 + contentHeight) or 42
+        local targetContentH = expanded and contentHeight or 0
         
-        CreateTween(section, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Size = UDim2.new(1, 0, 0, targetHeight)})
-        CreateTween(arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Rotation = targetRotation})
-        
-        if expanded then
-            content.Size = UDim2.new(1, 0, 0, contentLayout.AbsoluteContentSize.Y + 20)
-        end
+        Tween(section, SmoothTween, {Size = UDim2.new(1, 0, 0, targetSectionH)})
+        Tween(content, SmoothTween, {Size = UDim2.new(1, 0, 0, targetContentH)})
     end)
     
     contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         if expanded then
-            content.Size = UDim2.new(1, 0, 0, contentLayout.AbsoluteContentSize.Y + 20)
-            section.Size = UDim2.new(1, 0, 0, contentLayout.AbsoluteContentSize.Y + 60)
+            local contentHeight = contentLayout.AbsoluteContentSize.Y + 16
+            section.Size = UDim2.new(1, 0, 0, 42 + contentHeight)
+            content.Size = UDim2.new(1, 0, 0, contentHeight)
         end
+    end)
+    
+    header.MouseEnter:Connect(function()
+        Tween(header, QuickTween, {BackgroundTransparency = 0.2})
+    end)
+    header.MouseLeave:Connect(function()
+        Tween(header, QuickTween, {BackgroundTransparency = 0.5})
     end)
     
     return content
 end
 
--- Create Toggle
-local function CreateToggle(parent, name, default, callback)
+-- ════════════════════════════════════════════════════
+-- TOGGLE BUILDER
+-- ════════════════════════════════════════════════════
+
+local function CreateToggle(parent, name, default, callback, description)
     local toggle = Instance.new("Frame")
-    toggle.Name = name .. "Toggle"
-    toggle.Size = UDim2.new(1, 0, 0, 30)
+    toggle.Name = name:gsub(" ", "") .. "Toggle"
+    toggle.Size = UDim2.new(1, 0, 0, description and 44 or 32)
     toggle.BackgroundTransparency = 1
     toggle.Parent = parent
-    
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -60, 1, 0)
-    label.BackgroundTransparency = 1
-    label.Text = name
-    label.TextColor3 = GetThemeColor("TextPrimary")
-    label.TextSize = 13
-    label.Font = Enum.Font.Gotham
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.Parent = toggle
-    
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 48, 0, 24)
-    button.Position = UDim2.new(1, -48, 0.5, -12)
-    button.BackgroundColor3 = default and GetThemeColor("Primary") or GetThemeColor("Tertiary")
-    button.BorderSizePixel = 0
-    button.Text = ""
-    button.AutoButtonColor = false
-    button.Parent = toggle
-    
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(1, 0)
-    buttonCorner.Parent = button
-    
-    local knob = Instance.new("Frame")
-    knob.Size = UDim2.new(0, 18, 0, 18)
-    knob.Position = default and UDim2.new(1, -21, 0.5, -9) or UDim2.new(0, 3, 0.5, -9)
-    knob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    knob.BorderSizePixel = 0
-    knob.Parent = button
-    
-    local knobCorner = Instance.new("UICorner")
-    knobCorner.CornerRadius = UDim.new(1, 0)
-    knobCorner.Parent = knob
-    
-    local state = default
-    
-    button.MouseButton1Click:Connect(function()
-        state = not state
-        
-        local bgColor = state and GetThemeColor("Primary") or GetThemeColor("Tertiary")
-        local knobPos = state and UDim2.new(1, -21, 0.5, -9) or UDim2.new(0, 3, 0.5, -9)
-        
-        CreateTween(button, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = bgColor})
-        CreateTween(knob, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Position = knobPos})
-        
-        if callback then
-            callback(state)
-        end
-    end)
-    
-    return toggle
-end
-
--- Create Slider
-local function CreateSlider(parent, name, min, max, default, suffix, callback)
-    local slider = Instance.new("Frame")
-    slider.Name = name .. "Slider"
-    slider.Size = UDim2.new(1, 0, 0, 45)
-    slider.BackgroundTransparency = 1
-    slider.Parent = parent
     
     local label = Instance.new("TextLabel")
     label.Size = UDim2.new(1, -60, 0, 20)
     label.BackgroundTransparency = 1
     label.Text = name
-    label.TextColor3 = GetThemeColor("TextPrimary")
+    label.TextColor3 = Theme.TextPrimary
     label.TextSize = 13
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
-    label.Parent = slider
+    label.Parent = toggle
     
-    local valueLabel = Instance.new("TextLabel")
-    valueLabel.Size = UDim2.new(0, 60, 0, 20)
-    valueLabel.Position = UDim2.new(1, -60, 0, 0)
-    valueLabel.BackgroundTransparency = 1
-    valueLabel.Text = default .. (suffix or "")
-    valueLabel.TextColor3 = GetThemeColor("Primary")
-    valueLabel.TextSize = 13
-    valueLabel.Font = Enum.Font.GothamBold
-    valueLabel.TextXAlignment = Enum.TextXAlignment.Right
-    valueLabel.Parent = slider
-    
-    local track = Instance.new("Frame")
-    track.Size = UDim2.new(1, 0, 0, 6)
-    track.Position = UDim2.new(0, 0, 1, -16)
-    track.BackgroundColor3 = GetThemeColor("Tertiary")
-    track.BorderSizePixel = 0
-    track.Parent = slider
-    
-    local trackCorner = Instance.new("UICorner")
-    trackCorner.CornerRadius = UDim.new(1, 0)
-    trackCorner.Parent = track
-    
-    local fill = Instance.new("Frame")
-    fill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0)
-    fill.BackgroundColor3 = GetThemeColor("Primary")
-    fill.BorderSizePixel = 0
-    fill.Parent = track
-    
-    local fillCorner = Instance.new("UICorner")
-    fillCorner.CornerRadius = UDim.new(1, 0)
-    fillCorner.Parent = fill
-    
-    local handle = Instance.new("Frame")
-    handle.Size = UDim2.new(0, 14, 0, 14)
-    handle.Position = UDim2.new((default - min) / (max - min), -7, 0.5, -7)
-    handle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    handle.BorderSizePixel = 0
-    handle.Parent = track
-    
-    local handleCorner = Instance.new("UICorner")
-    handleCorner.CornerRadius = UDim.new(1, 0)
-    handleCorner.Parent = handle
-    
-    local dragging = false
-    local value = default
-    
-    local function updateSlider(input)
-        local relativeX = math.clamp((input.Position.X - track.AbsolutePosition.X) / track.AbsoluteSize.X, 0, 1)
-        value = math.floor(min + (max - min) * relativeX)
-        
-        fill.Size = UDim2.new(relativeX, 0, 1, 0)
-        handle.Position = UDim2.new(relativeX, -7, 0.5, -7)
-        valueLabel.Text = value .. (suffix or "")
-        
-        if callback then
-            callback(value)
-        end
+    if description then
+        local desc = Instance.new("TextLabel")
+        desc.Size = UDim2.new(1, -60, 0, 18)
+        desc.Position = UDim2.new(0, 0, 0, 20)
+        desc.BackgroundTransparency = 1
+        desc.Text = description
+        desc.TextColor3 = Theme.TextMuted
+        desc.TextSize = 11
+        desc.Font = Enum.Font.Gotham
+        desc.TextXAlignment = Enum.TextXAlignment.Left
+        desc.TextWrapped = true
+        desc.Parent = toggle
     end
     
-    track.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = true
-            updateSlider(input)
-        end
+    local btnFrame = Instance.new("TextButton")
+    btnFrame.Size = UDim2.new(0, 44, 0, 22)
+    btnFrame.Position = UDim2.new(1, -44, 0, description and 10 or 4)
+    btnFrame.BackgroundColor3 = default and Theme.ToggleOn or Theme.ToggleOff
+    btnFrame.BorderSizePixel = 0
+    btnFrame.Text = ""
+    btnFrame.AutoButtonColor = false
+    btnFrame.Parent = toggle
+    AddCorner(btnFrame, 11)
+    
+    local knob = Instance.new("Frame")
+    knob.Size = UDim2.new(0, 16, 0, 16)
+    knob.Position = default and UDim2.new(1, -19, 0.5, -8) or UDim2.new(0, 3, 0.5, -8)
+    knob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    knob.BorderSizePixel = 0
+    knob.Parent = btnFrame
+    AddCorner(knob, 8)
+    
+    local state = default
+    
+    btnFrame.MouseButton1Click:Connect(function()
+        state = not state
+        Tween(btnFrame, QuickTween, {BackgroundColor3 = state and Theme.ToggleOn or Theme.ToggleOff})
+        Tween(knob, QuickTween, {Position = state and UDim2.new(1, -19, 0.5, -8) or UDim2.new(0, 3, 0.5, -8)})
+        if callback then callback(state) end
     end)
     
-    track.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = false
-        end
-    end)
-    
-    UserInputService.InputChanged:Connect(function(input)
-        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            updateSlider(input)
-        end
-    end)
-    
-    return slider
+    return toggle, function() return state end
 end
 
--- Create Dropdown
+-- ════════════════════════════════════════════════════
+-- INPUT FIELD BUILDER (for delays, limits)
+-- ════════════════════════════════════════════════════
+
+local function CreateInputField(parent, name, default, callback, suffix)
+    local field = Instance.new("Frame")
+    field.Name = name:gsub(" ", "") .. "Input"
+    field.Size = UDim2.new(1, 0, 0, 32)
+    field.BackgroundTransparency = 1
+    field.Parent = parent
+    
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(0.55, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = name
+    label.TextColor3 = Theme.TextPrimary
+    label.TextSize = 13
+    label.Font = Enum.Font.Gotham
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = field
+    
+    local inputBox = Instance.new("TextBox")
+    inputBox.Size = UDim2.new(0.4, 0, 0, 28)
+    inputBox.Position = UDim2.new(0.6, 0, 0.5, -14)
+    inputBox.BackgroundColor3 = Theme.InputField
+    inputBox.BorderSizePixel = 0
+    inputBox.Text = tostring(default)
+    inputBox.TextColor3 = Theme.TextPrimary
+    inputBox.TextSize = 13
+    inputBox.Font = Enum.Font.GothamBold
+    inputBox.ClearTextOnFocus = true
+    inputBox.Parent = field
+    AddCorner(inputBox, 6)
+    AddStroke(inputBox, Theme.Border, 1)
+    
+    inputBox.Focused:Connect(function()
+        Tween(inputBox, QuickTween, {BackgroundColor3 = Theme.InputFieldFocus})
+    end)
+    inputBox.FocusLost:Connect(function()
+        Tween(inputBox, QuickTween, {BackgroundColor3 = Theme.InputField})
+        local val = tonumber(inputBox.Text)
+        if val and callback then
+            callback(val)
+        elseif not tonumber(inputBox.Text) then
+            inputBox.Text = tostring(default)
+        end
+    end)
+    
+    return field
+end
+
+-- ════════════════════════════════════════════════════
+-- DROPDOWN BUILDER
+-- ════════════════════════════════════════════════════
+
 local function CreateDropdown(parent, name, options, default, callback)
     local dropdown = Instance.new("Frame")
-    dropdown.Name = name .. "Dropdown"
-    dropdown.Size = UDim2.new(1, 0, 0, 35)
+    dropdown.Name = name:gsub(" ", "") .. "Dropdown"
+    dropdown.Size = UDim2.new(1, 0, 0, 52)
     dropdown.BackgroundTransparency = 1
+    dropdown.ClipsDescendants = false
     dropdown.Parent = parent
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 0, 20)
+    label.Size = UDim2.new(0.55, 0, 0, 18)
     label.BackgroundTransparency = 1
     label.Text = name
-    label.TextColor3 = GetThemeColor("TextPrimary")
-    label.TextSize = 13
+    label.TextColor3 = Theme.TextPrimary
+    label.TextSize = 12
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
+    label.TextWrapped = true
     label.Parent = dropdown
     
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(1, 0, 0, 32)
-    button.Position = UDim2.new(0, 0, 0, 25)
-    button.BackgroundColor3 = GetThemeColor("Tertiary")
-    button.BorderSizePixel = 0
-    button.Text = ""
-    button.AutoButtonColor = false
-    button.Parent = dropdown
+    if name:len() > 20 then
+        label.Size = UDim2.new(1, 0, 0, 18)
+        local desc = Instance.new("TextLabel")
+        desc.Size = UDim2.new(1, 0, 0, 14)
+        desc.Position = UDim2.new(0, 0, 0, 16)
+        desc.BackgroundTransparency = 1
+        desc.Text = name
+        desc.TextColor3 = Theme.TextMuted
+        desc.TextSize = 10
+        desc.Font = Enum.Font.Gotham
+        desc.TextXAlignment = Enum.TextXAlignment.Left
+        desc.Visible = false
+        desc.Parent = dropdown
+    end
     
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(0, 6)
-    buttonCorner.Parent = button
+    local btnContainer = Instance.new("Frame")
+    btnContainer.Size = UDim2.new(0.42, 0, 0, 30)
+    btnContainer.Position = UDim2.new(0.58, 0, 0, 16)
+    btnContainer.BackgroundColor3 = Theme.InputField
+    btnContainer.BorderSizePixel = 0
+    btnContainer.Parent = dropdown
+    AddCorner(btnContainer, 6)
+    AddStroke(btnContainer, Theme.Border, 1)
     
-    local selected = Instance.new("TextLabel")
-    selected.Size = UDim2.new(1, -40, 1, 0)
-    selected.Position = UDim2.new(0, 10, 0, 0)
-    selected.BackgroundTransparency = 1
-    selected.Text = default or options[1] or ""
-    selected.TextColor3 = GetThemeColor("TextPrimary")
-    selected.TextSize = 13
-    selected.Font = Enum.Font.Gotham
-    selected.TextXAlignment = Enum.TextXAlignment.Left
-    selected.Parent = button
+    local selectedLabel = Instance.new("TextLabel")
+    selectedLabel.Size = UDim2.new(1, -28, 1, 0)
+    selectedLabel.Position = UDim2.new(0, 10, 0, 0)
+    selectedLabel.BackgroundTransparency = 1
+    selectedLabel.Text = default or options[1] or "--"
+    selectedLabel.TextColor3 = Theme.TextPrimary
+    selectedLabel.TextSize = 12
+    selectedLabel.Font = Enum.Font.Gotham
+    selectedLabel.TextXAlignment = Enum.TextXAlignment.Left
+    selectedLabel.TextTruncate = Enum.TextTruncate.AtEnd
+    selectedLabel.Parent = btnContainer
     
-    local arrow = Instance.new("TextLabel")
-    arrow.Size = UDim2.new(0, 20, 0, 20)
-    arrow.Position = UDim2.new(1, -25, 0.5, -10)
-    arrow.BackgroundTransparency = 1
-    arrow.Text = "▼"
-    arrow.TextColor3 = GetThemeColor("TextSecondary")
-    arrow.TextSize = 10
-    arrow.Font = Enum.Font.GothamBold
-    arrow.Rotation = 0
-    arrow.Parent = button
+    local ddArrow = Instance.new("TextLabel")
+    ddArrow.Size = UDim2.new(0, 20, 1, 0)
+    ddArrow.Position = UDim2.new(1, -22, 0, 0)
+    ddArrow.BackgroundTransparency = 1
+    ddArrow.Text = "⇅"
+    ddArrow.TextColor3 = Theme.TextMuted
+    ddArrow.TextSize = 12
+    ddArrow.Font = Enum.Font.GothamBold
+    ddArrow.Parent = btnContainer
     
+    local ddBtn = Instance.new("TextButton")
+    ddBtn.Size = UDim2.new(1, 0, 1, 0)
+    ddBtn.BackgroundTransparency = 1
+    ddBtn.Text = ""
+    ddBtn.Parent = btnContainer
+    
+    -- Options list (floating)
     local optionsList = Instance.new("Frame")
     optionsList.Size = UDim2.new(1, 0, 0, 0)
-    optionsList.Position = UDim2.new(0, 0, 1, 5)
-    optionsList.BackgroundColor3 = GetThemeColor("Secondary")
+    optionsList.Position = UDim2.new(0, 0, 1, 4)
+    optionsList.BackgroundColor3 = Theme.DropdownBg
     optionsList.BorderSizePixel = 0
     optionsList.Visible = false
     optionsList.ClipsDescendants = true
-    optionsList.ZIndex = 10
-    optionsList.Parent = button
+    optionsList.ZIndex = 50
+    optionsList.Parent = btnContainer
+    AddCorner(optionsList, 6)
+    AddStroke(optionsList, Theme.Border, 1)
     
-    local optionsCorner = Instance.new("UICorner")
-    optionsCorner.CornerRadius = UDim.new(0, 6)
-    optionsCorner.Parent = optionsList
+    local optLayout = AddLayout(optionsList, Enum.FillDirection.Vertical, 1)
+    AddPadding(optionsList, 4, 4, 4, 4)
     
-    local optionsLayout = Instance.new("UIListLayout")
-    optionsLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    optionsLayout.Padding = UDim.new(0, 2)
-    optionsLayout.Parent = optionsList
+    local ddExpanded = false
     
-    local optionsPadding = Instance.new("UIPadding")
-    optionsPadding.PaddingTop = UDim.new(0, 5)
-    optionsPadding.PaddingBottom = UDim.new(0, 5)
-    optionsPadding.Parent = optionsList
-    
-    local expanded = false
-    
-    for i, option in ipairs(options) do
-        local optionButton = Instance.new("TextButton")
-        optionButton.Size = UDim2.new(1, 0, 0, 30)
-        optionButton.BackgroundColor3 = GetThemeColor("Tertiary")
-        optionButton.BorderSizePixel = 0
-        optionButton.Text = option
-        optionButton.TextColor3 = GetThemeColor("TextPrimary")
-        optionButton.TextSize = 12
-        optionButton.Font = Enum.Font.Gotham
-        optionButton.AutoButtonColor = false
-        optionButton.Parent = optionsList
+    for _, opt in ipairs(options) do
+        local optBtn = Instance.new("TextButton")
+        optBtn.Size = UDim2.new(1, 0, 0, 28)
+        optBtn.BackgroundColor3 = Theme.InputField
+        optBtn.BackgroundTransparency = 1
+        optBtn.BorderSizePixel = 0
+        optBtn.Text = opt
+        optBtn.TextColor3 = Theme.TextSecondary
+        optBtn.TextSize = 12
+        optBtn.Font = Enum.Font.Gotham
+        optBtn.AutoButtonColor = false
+        optBtn.ZIndex = 51
+        optBtn.Parent = optionsList
+        AddCorner(optBtn, 4)
         
-        optionButton.MouseEnter:Connect(function()
-            optionButton.BackgroundColor3 = GetThemeColor("Primary")
+        optBtn.MouseEnter:Connect(function()
+            Tween(optBtn, QuickTween, {BackgroundTransparency = 0, BackgroundColor3 = Theme.DropdownHover})
+            optBtn.TextColor3 = Theme.TextPrimary
         end)
-        
-        optionButton.MouseLeave:Connect(function()
-            optionButton.BackgroundColor3 = GetThemeColor("Tertiary")
+        optBtn.MouseLeave:Connect(function()
+            Tween(optBtn, QuickTween, {BackgroundTransparency = 1})
+            optBtn.TextColor3 = Theme.TextSecondary
         end)
-        
-        optionButton.MouseButton1Click:Connect(function()
-            selected.Text = option
-            expanded = false
-            
-            CreateTween(optionsList, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Size = UDim2.new(1, 0, 0, 0)})
-            CreateTween(arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Rotation = 0})
-            
-            wait(0.2)
+        optBtn.MouseButton1Click:Connect(function()
+            selectedLabel.Text = opt
+            ddExpanded = false
+            Tween(optionsList, QuickTween, {Size = UDim2.new(1, 0, 0, 0)}).Completed:Wait()
             optionsList.Visible = false
-            dropdown.Size = UDim2.new(1, 0, 0, 60)
-            
-            if callback then
-                callback(option)
-            end
+            if callback then callback(opt) end
         end)
     end
     
-    button.MouseButton1Click:Connect(function()
-        expanded = not expanded
-        
-        if expanded then
+    ddBtn.MouseButton1Click:Connect(function()
+        ddExpanded = not ddExpanded
+        if ddExpanded then
             optionsList.Visible = true
-            local targetSize = #options * 32 + 10
-            dropdown.Size = UDim2.new(1, 0, 0, 60 + targetSize)
-            
-            CreateTween(optionsList, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Size = UDim2.new(1, 0, 0, targetSize)})
-            CreateTween(arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Rotation = 180})
+            local targetH = math.min(#options * 29 + 8, 200)
+            Tween(optionsList, QuickTween, {Size = UDim2.new(1, 0, 0, targetH)})
         else
-            CreateTween(optionsList, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Size = UDim2.new(1, 0, 0, 0)})
-            CreateTween(arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {Rotation = 0})
-            
-            wait(0.2)
+            Tween(optionsList, QuickTween, {Size = UDim2.new(1, 0, 0, 0)}).Completed:Wait()
             optionsList.Visible = false
-            dropdown.Size = UDim2.new(1, 0, 0, 60)
         end
     end)
     
     return dropdown
 end
 
--- ============================================
--- CREATE PAGES
--- ============================================
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   BUILD ALL PAGES                              ║
+-- ╚══════════════════════════════════════════════════════════════╝
 
--- Local Player Page
-local LocalPlayerPage = CreatePage("LocalPlayer")
-local LocalPlayerButton = CreateNavButton("Local Player", "👤", 1)
+-- ===== NAVIGATION GROUP 1 (LEFT SIDEBAR) =====
+CreateNavButton("Local Player", "👤", 1)
+CreateNavButton("Main", "🏠", 2)
+CreateNavButton("Zone Fishing", "🎣", 3)
+CreateNavButton("Backpack", "🎒", 4)
+CreateNavButton("Webhook", "🔗", 5)
+CreateNavButton("Trading", "💱", 6)
 
-local MovementSection = CreateSection(LocalPlayerPage, "Movement", 1)
-CreateSlider(MovementSection, "WalkSpeed", 16, 200, 16, "", function(val)
+-- Separator
+local sep1 = Instance.new("Frame")
+sep1.Size = UDim2.new(1, -16, 0, 1)
+sep1.BackgroundColor3 = Theme.Divider
+sep1.BorderSizePixel = 0
+sep1.LayoutOrder = 7
+sep1.Parent = NavScroll
+
+CreateNavButton("Automation", "⚙", 8)
+CreateNavButton("Shopping", "🛒", 9)
+CreateNavButton("Quests", "📜", 10)
+CreateNavButton("Teleportation", "📍", 11)
+CreateNavButton("Utilities", "🔧", 12)
+CreateNavButton("Performance", "⚡", 13)
+
+-- Update nav scroll canvas
+NavLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    NavScroll.CanvasSize = UDim2.new(0, 0, 0, NavLayout.AbsoluteContentSize.Y + 12)
+end)
+
+-- ════════════════════════════════════════════════════
+-- PAGE: LOCAL PLAYER
+-- ════════════════════════════════════════════════════
+
+local localPlayerPage = CreatePage("Local Player")
+
+local movementSection = CreateSection(localPlayerPage, "Movement", 1, false)
+CreateInputField(movementSection, "WalkSpeed", 16, function(val)
     Settings.WalkSpeed = val
     UpdateCharacter()
 end)
-CreateSlider(MovementSection, "JumpPower", 50, 200, 50, "", function(val)
+CreateInputField(movementSection, "JumpPower", 50, function(val)
     Settings.JumpPower = val
     UpdateCharacter()
 end)
 
-local CameraSection = CreateSection(LocalPlayerPage, "Camera", 2)
-CreateSlider(CameraSection, "Field of View", 70, 120, 70, "°", function(val)
+local cameraSection = CreateSection(localPlayerPage, "Camera", 2, false)
+CreateInputField(cameraSection, "Field of View", 70, function(val)
     Settings.FOV = val
     UpdateCharacter()
 end)
 
-local AccessoriesSection = CreateSection(LocalPlayerPage, "Player Accessories", 3)
-CreateToggle(AccessoriesSection, "Fishing Radar", false, function(val)
+local accessoriesSection = CreateSection(localPlayerPage, "Player Accessories", 3, true)
+CreateToggle(accessoriesSection, "Fishing Radar", false, function(val)
     Settings.FishingRadar = val
 end)
-CreateToggle(AccessoriesSection, "Diving Gear", false, function(val)
+CreateToggle(accessoriesSection, "Diving Gear", false, function(val)
     Settings.DivingGear = val
 end)
-CreateToggle(AccessoriesSection, "Auto Equip Rod", true, function(val)
+CreateToggle(accessoriesSection, "Auto Equip Rod", false, function(val)
     Settings.AutoEquipRod = val
 end)
 
--- Zone Fishing Page
-local ZoneFishingPage = CreatePage("ZoneFishing")
-local ZoneFishingButton = CreateNavButton("Zone Fishing", "🎣", 2)
+-- ════════════════════════════════════════════════════
+-- PAGE: MAIN
+-- ════════════════════════════════════════════════════
 
-local LegitFishingSection = CreateSection(ZoneFishingPage, "Legit Fishing", 1)
-CreateToggle(LegitFishingSection, "Perfect Cast", false, function(val)
+local mainPage = CreatePage("Main")
+
+local legitSection = CreateSection(mainPage, "Legit Fishing", 1, true)
+CreateToggle(legitSection, "Perfect Cast", false, function(val)
     PerfectCastEnabled = val
 end)
-CreateToggle(LegitFishingSection, "Enable Auto Fishing", false, function(val)
+CreateToggle(legitSection, "Enable Auto Fishing", false, function(val)
     AutoFishEnabled = val
     Settings.FishingMode = "Legit"
 end)
-CreateToggle(LegitFishingSection, "Auto Shake", false, function(val)
+CreateToggle(legitSection, "Auto Shake", false, function(val)
     AutoShakeEnabled = val
-end)
+end, "Automatically click the UI when a fish is hooked")
 
-local InstantFishingSection = CreateSection(ZoneFishingPage, "Instant Fishing", 2)
-CreateSlider(InstantFishingSection, "Complete Delay", 0, 10, 0, "s", function(val)
-    Settings.InstantDelay = val
+local instantSection = CreateSection(mainPage, "Instant Fishing", 2, false)
+CreateInputField(instantSection, "Complete Delay", 3.4, function(val)
+    Settings.InstantCompleteDelay = val
 end)
-CreateToggle(InstantFishingSection, "Enable", false, function(val)
+CreateToggle(instantSection, "Enable Auto Fishing", false, function(val)
     AutoFishEnabled = val
     Settings.FishingMode = "Instant"
 end)
 
-local SuperInstantSection = CreateSection(ZoneFishingPage, "Super Instant Fishing", 3)
-CreateSlider(SuperInstantSection, "Cancel Delay", 0, 5, 0, "s", function(val)
+local superInstantSection = CreateSection(mainPage, "Super Instant Fishing", 3, false)
+CreateInputField(superInstantSection, "Cancel Delay", 0.8, function(val)
     Settings.SuperInstantCancelDelay = val
 end)
-CreateSlider(SuperInstantSection, "Complete Delay", 0, 5, 0, "s", function(val)
+CreateInputField(superInstantSection, "Complete Delay", 0.3, function(val)
     Settings.SuperInstantCompleteDelay = val
 end)
-CreateToggle(SuperInstantSection, "Enable", false, function(val)
+CreateToggle(superInstantSection, "Enable Auto Fishing", false, function(val)
     AutoFishEnabled = val
     Settings.FishingMode = "Super Instant"
 end)
 
-local BetaInstantSection = CreateSection(ZoneFishingPage, "Super Instant BETA", 4)
-CreateSlider(BetaInstantSection, "Cancel Delay", 0, 1, 0, "s", function(val)
+local betaSection = CreateSection(mainPage, "Super Instant BETA Fishing", 4, false)
+CreateInputField(betaSection, "Cancel Delay", 0.075, function(val)
     Settings.BetaCancelDelay = val
 end)
-CreateSlider(BetaInstantSection, "Complete Delay", 0, 1, 0, "s", function(val)
+CreateInputField(betaSection, "Complete Delay", 0.305, function(val)
     Settings.BetaCompleteDelay = val
 end)
-CreateToggle(BetaInstantSection, "Enable", false, function(val)
+CreateToggle(betaSection, "Enable Auto Fishing", false, function(val)
     AutoFishEnabled = val
     Settings.FishingMode = "Beta Instant"
 end)
 
-local AutoSellingSection = CreateSection(ZoneFishingPage, "Auto Selling", 5)
-CreateDropdown(AutoSellingSection, "Selling Type", {"All", "Common", "Uncommon", "Rare", "Epic", "Legendary"}, "All", function(val)
+local autoSellSection = CreateSection(mainPage, "Auto Selling", 5, false)
+CreateDropdown(autoSellSection, "Selling Type", {"--", "All", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"}, "--", function(val)
     Settings.SellingType = val
 end)
-CreateToggle(AutoSellingSection, "Enable Auto Sell", false, function(val)
+CreateToggle(autoSellSection, "Enable Auto Selling", false, function(val)
     AutoSellEnabled = val
 end)
-
-local FishingZonesSection = CreateSection(ZoneFishingPage, "Fishing Zones", 6)
-CreateDropdown(FishingZonesSection, "Fishing Spot", FishItLocations, "Fisherman Island", function(val)
-    Settings.SelectedLocation = val
+CreateInputField(autoSellSection, "Sell Limit", 100, function(val)
+    Settings.SellLimit = val
 end)
-CreateToggle(FishingZonesSection, "Auto Teleport", false, function(val)
+CreateInputField(autoSellSection, "Sell Delay (Seconds)", 1, function(val)
+    Settings.SellDelay = val
+end)
+
+-- ════════════════════════════════════════════════════
+-- PAGE: ZONE FISHING
+-- ════════════════════════════════════════════════════
+
+local zoneFishingPage = CreatePage("Zone Fishing")
+
+local fishingZonesSection = CreateSection(zoneFishingPage, "Fishing Zones", 1, true)
+CreateDropdown(fishingZonesSection, "Fishing Spot", FishItLocations, "Crystal Depths", function(val)
+    Settings.FishingSpot = val
+end)
+CreateToggle(fishingZonesSection, "Auto Teleport", false, function(val)
     Settings.AutoTeleport = val
 end)
 
--- Utilities Page
-local UtilitiesPage = CreatePage("Utilities")
-local UtilitiesButton = CreateNavButton("Utilities", "🛠️", 3)
+local eventSection = CreateSection(zoneFishingPage, "Event", 2, false)
+local eventNote = Instance.new("TextLabel")
+eventNote.Size = UDim2.new(1, 0, 0, 24)
+eventNote.BackgroundTransparency = 1
+eventNote.Text = "No active events"
+eventNote.TextColor3 = Theme.TextMuted
+eventNote.TextSize = 12
+eventNote.Font = Enum.Font.Gotham
+eventNote.Parent = eventSection
 
-local AnimationSection = CreateSection(UtilitiesPage, "Animation Changer", 1)
-CreateDropdown(AnimationSection, "Select Animation Skin", {"Default", "Holy", "Retro", "Festive", "Spooky", "Ancient", "Crystal"}, "Default", function(val)
+-- ════════════════════════════════════════════════════
+-- PAGE: BACKPACK
+-- ════════════════════════════════════════════════════
+
+local backpackPage = CreatePage("Backpack")
+local bpSection = CreateSection(backpackPage, "Backpack Manager", 1, true)
+local bpNote = Instance.new("TextLabel")
+bpNote.Size = UDim2.new(1, 0, 0, 24)
+bpNote.BackgroundTransparency = 1
+bpNote.Text = "View and manage your caught fish"
+bpNote.TextColor3 = Theme.TextMuted
+bpNote.TextSize = 12
+bpNote.Font = Enum.Font.Gotham
+bpNote.Parent = bpSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: WEBHOOK
+-- ════════════════════════════════════════════════════
+
+local webhookPage = CreatePage("Webhook")
+local whSection = CreateSection(webhookPage, "Discord Webhook", 1, true)
+local whNote = Instance.new("TextLabel")
+whNote.Size = UDim2.new(1, 0, 0, 24)
+whNote.BackgroundTransparency = 1
+whNote.Text = "Send catch notifications to Discord"
+whNote.TextColor3 = Theme.TextMuted
+whNote.TextSize = 12
+whNote.Font = Enum.Font.Gotham
+whNote.Parent = whSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: TRADING
+-- ════════════════════════════════════════════════════
+
+local tradingPage = CreatePage("Trading")
+local trSection = CreateSection(tradingPage, "Trading Hub", 1, true)
+local trNote = Instance.new("TextLabel")
+trNote.Size = UDim2.new(1, 0, 0, 24)
+trNote.BackgroundTransparency = 1
+trNote.Text = "Trade fish with other players"
+trNote.TextColor3 = Theme.TextMuted
+trNote.TextSize = 12
+trNote.Font = Enum.Font.Gotham
+trNote.Parent = trSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: AUTOMATION
+-- ════════════════════════════════════════════════════
+
+local automationPage = CreatePage("Automation")
+local autoSection = CreateSection(automationPage, "Auto Actions", 1, true)
+local autoNote = Instance.new("TextLabel")
+autoNote.Size = UDim2.new(1, 0, 0, 24)
+autoNote.BackgroundTransparency = 1
+autoNote.Text = "Automated gameplay actions"
+autoNote.TextColor3 = Theme.TextMuted
+autoNote.TextSize = 12
+autoNote.Font = Enum.Font.Gotham
+autoNote.Parent = autoSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: SHOPPING
+-- ════════════════════════════════════════════════════
+
+local shoppingPage = CreatePage("Shopping")
+local shopSection = CreateSection(shoppingPage, "Auto Shop", 1, true)
+local shopNote = Instance.new("TextLabel")
+shopNote.Size = UDim2.new(1, 0, 0, 24)
+shopNote.BackgroundTransparency = 1
+shopNote.Text = "Auto-purchase items from shop"
+shopNote.TextColor3 = Theme.TextMuted
+shopNote.TextSize = 12
+shopNote.Font = Enum.Font.Gotham
+shopNote.Parent = shopSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: QUESTS
+-- ════════════════════════════════════════════════════
+
+local questsPage = CreatePage("Quests")
+local questSection = CreateSection(questsPage, "Quest Tracker", 1, true)
+local questNote = Instance.new("TextLabel")
+questNote.Size = UDim2.new(1, 0, 0, 24)
+questNote.BackgroundTransparency = 1
+questNote.Text = "Auto-complete quests"
+questNote.TextColor3 = Theme.TextMuted
+questNote.TextSize = 12
+questNote.Font = Enum.Font.Gotham
+questNote.Parent = questSection
+
+-- ════════════════════════════════════════════════════
+-- PAGE: TELEPORTATION
+-- ════════════════════════════════════════════════════
+
+local teleportPage = CreatePage("Teleportation")
+local tpSection = CreateSection(teleportPage, "Teleport Locations", 1, true)
+CreateDropdown(tpSection, "Destination", FishItLocations, "Fisherman Island", function(val)
+    -- teleport logic
+end)
+
+-- ════════════════════════════════════════════════════
+-- PAGE: UTILITIES
+-- ════════════════════════════════════════════════════
+
+local utilitiesPage = CreatePage("Utilities")
+
+local utilSection = CreateSection(utilitiesPage, "Utilities", 1, false)
+local utilNote = Instance.new("TextLabel")
+utilNote.Size = UDim2.new(1, 0, 0, 24)
+utilNote.BackgroundTransparency = 1
+utilNote.Text = "Miscellaneous utility features"
+utilNote.TextColor3 = Theme.TextMuted
+utilNote.TextSize = 12
+utilNote.Font = Enum.Font.Gotham
+utilNote.Parent = utilSection
+
+local animSection = CreateSection(utilitiesPage, "Animation Changer", 2, true)
+CreateDropdown(animSection, "Select Animation\nSkin", FishItAnimationSkins, "Holy", function(val)
     Settings.AnimationSkin = val
 end)
-CreateToggle(AnimationSection, "Enable", false, function(val)
-    -- Apply animation changes
+CreateToggle(animSection, "Enable Animation Changer", false, function(val)
+    Settings.EnableAnimation = val
 end)
 
--- Performance Page
-local PerformancePage = CreatePage("Performance")
-local PerformanceButton = CreateNavButton("Performance", "⚡", 4)
+local securitySection = CreateSection(utilitiesPage, "Security", 3, false)
+local secNote = Instance.new("TextLabel")
+secNote.Size = UDim2.new(1, 0, 0, 24)
+secNote.BackgroundTransparency = 1
+secNote.Text = "Anti-detection settings"
+secNote.TextColor3 = Theme.TextMuted
+secNote.TextSize = 12
+secNote.Font = Enum.Font.Gotham
+secNote.Parent = securitySection
 
-local FPSBoostSection = CreateSection(PerformancePage, "FPS Boost", 1)
-CreateToggle(FPSBoostSection, "Disable Thunder", false, function(val)
+-- ════════════════════════════════════════════════════
+-- PAGE: PERFORMANCE
+-- ════════════════════════════════════════════════════
+
+local performancePage = CreatePage("Performance")
+
+local fpsSection = CreateSection(performancePage, "FPS Boost", 1, true)
+CreateToggle(fpsSection, "Disable Thunder", false, function(val)
     Settings.DisableThunder = val
-    if val then
-        -- Disable thunder effects
-    end
 end)
-CreateToggle(FPSBoostSection, "Disable VFX Effects", false, function(val)
+CreateToggle(fpsSection, "Disable VFX Effects", false, function(val)
     Settings.DisableVFX = val
     if val then
-        -- Disable VFX
-    end
-end)
-CreateToggle(FPSBoostSection, "FPS Boost", false, function(val)
-    Settings.FPSBoost = val
-    if val then
-        -- Apply FPS boost settings
         for _, v in pairs(workspace:GetDescendants()) do
             if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Smoke") or v:IsA("Fire") or v:IsA("Sparkles") then
                 v.Enabled = false
@@ -1589,173 +1997,127 @@ CreateToggle(FPSBoostSection, "FPS Boost", false, function(val)
         end
     end
 end)
-
--- ============================================
--- PAGE NAVIGATION
--- ============================================
-local currentPage = nil
-
-local function ShowPage(page, button)
-    if currentPage then
-        currentPage.Visible = false
-    end
-    
-    -- Reset all nav buttons
-    for _, btn in pairs(NavList:GetChildren()) do
-        if btn:IsA("TextButton") then
-            btn.BackgroundColor3 = GetThemeColor("Tertiary")
-            for _, child in pairs(btn:GetChildren()) do
-                if child:IsA("TextLabel") then
-                    child.TextColor3 = GetThemeColor("TextSecondary")
-                end
+CreateToggle(fpsSection, "FPS Boost", false, function(val)
+    Settings.FPSBoost = val
+    if val then
+        settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Smoke") or v:IsA("Fire") or v:IsA("Sparkles") then
+                v.Enabled = false
+            end
+            if v:IsA("Decal") or v:IsA("Texture") then
+                v.Transparency = 1
             end
         end
     end
-    
-    -- Highlight selected button
-    button.BackgroundColor3 = GetThemeColor("Primary")
-    for _, child in pairs(button:GetChildren()) do
-        if child:IsA("TextLabel") then
-            child.TextColor3 = Color3.fromRGB(255, 255, 255)
-        end
-    end
-    
-    page.Visible = true
-    currentPage = page
+end)
+
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   NAVIGATION CLICK HANDLERS                    ║
+-- ╚══════════════════════════════════════════════════════════════╝
+
+for name, nav in pairs(NavButtons) do
+    nav.Button.MouseButton1Click:Connect(function()
+        ShowPage(name)
+    end)
 end
 
-LocalPlayerButton.MouseButton1Click:Connect(function()
-    ShowPage(LocalPlayerPage, LocalPlayerButton)
-end)
-
-ZoneFishingButton.MouseButton1Click:Connect(function()
-    ShowPage(ZoneFishingPage, ZoneFishingButton)
-end)
-
-UtilitiesButton.MouseButton1Click:Connect(function()
-    ShowPage(UtilitiesPage, UtilitiesButton)
-end)
-
-PerformanceButton.MouseButton1Click:Connect(function()
-    ShowPage(PerformancePage, PerformanceButton)
+-- Search Filter
+SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
+    local query = SearchBar.Text:lower()
+    for name, nav in pairs(NavButtons) do
+        if query == "" then
+            nav.Button.Visible = true
+        else
+            nav.Button.Visible = string.find(name:lower(), query) ~= nil
+        end
+    end
 end)
 
 -- Show default page
-ShowPage(ZoneFishingPage, ZoneFishingButton)
+ShowPage("Main")
 
--- ============================================
--- DRAGGABLE
--- ============================================
-local dragging = false
-local dragInput, dragStart, startPos
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   ENTRANCE ANIMATION                           ║
+-- ╚══════════════════════════════════════════════════════════════╝
 
-local function updateDrag(input)
-    local delta = input.Position - dragStart
-    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-end
-
-TopBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-        dragInput = input
-        updateDrag(input)
-    end
-end)
-
--- ============================================
--- ENTRANCE ANIMATION
--- ============================================
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.Size = UDim2.new(0, 0, 0, 0)
+Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 640, 0, 440)})
 
-local entranceTween = TweenService:Create(
-    MainFrame,
-    TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
-    {Size = UDim2.new(0, 620, 0, 480)}
-)
-entranceTween:Play()
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   NOTIFICATION SYSTEM                          ║
+-- ╚══════════════════════════════════════════════════════════════╝
 
--- ============================================
--- START LOOPS
--- ============================================
-AutoFishLoop()
-AutoSellLoop()
-
--- ============================================
--- NOTIFICATION
--- ============================================
 local function CreateNotification(title, message, duration)
     local notif = Instance.new("Frame")
-    notif.Size = UDim2.new(0, 300, 0, 80)
-    notif.Position = UDim2.new(1, -320, 1, -100)
-    notif.BackgroundColor3 = GetThemeColor("Secondary")
+    notif.Size = UDim2.new(0, 280, 0, 72)
+    notif.Position = UDim2.new(1, 10, 1, -90)
+    notif.BackgroundColor3 = Theme.Section
     notif.BorderSizePixel = 0
+    notif.ZIndex = 200
     notif.Parent = ScreenGui
+    AddCorner(notif, 10)
+    AddStroke(notif, Theme.Primary, 1)
     
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
-    corner.Parent = notif
+    local accentBar = Instance.new("Frame")
+    accentBar.Size = UDim2.new(0, 3, 0.7, 0)
+    accentBar.Position = UDim2.new(0, 8, 0.15, 0)
+    accentBar.BackgroundColor3 = Theme.Primary
+    accentBar.BorderSizePixel = 0
+    accentBar.ZIndex = 201
+    accentBar.Parent = notif
+    AddCorner(accentBar, 2)
     
-    local titleLabel = Instance.new("TextLabel")
-    titleLabel.Size = UDim2.new(1, -20, 0, 25)
-    titleLabel.Position = UDim2.new(0, 10, 0, 10)
-    titleLabel.BackgroundTransparency = 1
-    titleLabel.Text = title
-    titleLabel.TextColor3 = GetThemeColor("TextPrimary")
-    titleLabel.TextSize = 14
-    titleLabel.Font = Enum.Font.GothamBold
-    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-    titleLabel.Parent = notif
+    local tLabel = Instance.new("TextLabel")
+    tLabel.Size = UDim2.new(1, -30, 0, 22)
+    tLabel.Position = UDim2.new(0, 18, 0, 10)
+    tLabel.BackgroundTransparency = 1
+    tLabel.Text = title
+    tLabel.TextColor3 = Theme.TextPrimary
+    tLabel.TextSize = 13
+    tLabel.Font = Enum.Font.GothamBold
+    tLabel.TextXAlignment = Enum.TextXAlignment.Left
+    tLabel.ZIndex = 201
+    tLabel.Parent = notif
     
-    local messageLabel = Instance.new("TextLabel")
-    messageLabel.Size = UDim2.new(1, -20, 0, 35)
-    messageLabel.Position = UDim2.new(0, 10, 0, 35)
-    messageLabel.BackgroundTransparency = 1
-    messageLabel.Text = message
-    messageLabel.TextColor3 = GetThemeColor("TextSecondary")
-    messageLabel.TextSize = 12
-    messageLabel.Font = Enum.Font.Gotham
-    messageLabel.TextWrapped = true
-    messageLabel.TextXAlignment = Enum.TextXAlignment.Left
-    messageLabel.TextYAlignment = Enum.TextYAlignment.Top
-    messageLabel.Parent = notif
+    local mLabel = Instance.new("TextLabel")
+    mLabel.Size = UDim2.new(1, -30, 0, 30)
+    mLabel.Position = UDim2.new(0, 18, 0, 32)
+    mLabel.BackgroundTransparency = 1
+    mLabel.Text = message
+    mLabel.TextColor3 = Theme.TextSecondary
+    mLabel.TextSize = 11
+    mLabel.Font = Enum.Font.Gotham
+    mLabel.TextWrapped = true
+    mLabel.TextXAlignment = Enum.TextXAlignment.Left
+    mLabel.TextYAlignment = Enum.TextYAlignment.Top
+    mLabel.ZIndex = 201
+    mLabel.Parent = notif
     
-    local slideTween = TweenService:Create(
-        notif,
-        TweenInfo.new(0.3, Enum.EasingStyle.Quad),
-        {Position = UDim2.new(1, -320, 1, -100)}
-    )
-    slideTween:Play()
+    -- Slide in
+    Tween(notif, SmoothTween, {Position = UDim2.new(1, -296, 1, -90)})
     
-    wait(duration or 3)
+    wait(duration or 4)
     
-    local fadeOut = TweenService:Create(
-        notif,
-        TweenInfo.new(0.3, Enum.EasingStyle.Quad),
-        {Position = UDim2.new(1, 20, 1, -100)}
-    )
-    fadeOut:Play()
-    fadeOut.Completed:Wait()
-    
+    -- Slide out
+    Tween(notif, SmoothTween, {Position = UDim2.new(1, 10, 1, -90)}).Completed:Wait()
     notif:Destroy()
 end
 
-CreateNotification("FISH IT! Script Loaded", "Script berhasil dimuat! Selamat memancing!", 5)
+-- ╔══════════════════════════════════════════════════════════════╗
+-- ║                   START EVERYTHING                              ║
+-- ╚══════════════════════════════════════════════════════════════╝
 
-print("=== FISH IT! AUTO FISHING SCRIPT ===")
+AutoFishLoop()
+AutoSellLoop()
+
+-- Show notification
+spawn(function()
+    wait(0.6)
+    CreateNotification("Atomic Hub Loaded", "Fish It! Script v0.3.9.8 berhasil dimuat!\n392 fish • 16 locations • discord.gg/getsades", 5)
+end)
+
+print("=== ATOMIC HUB - FISH IT! AUTO FISHING SCRIPT ===")
 print("Status: Loaded Successfully")
 print("Total Fish Database: 392")
 print("Locations: " .. #FishItLocations)
