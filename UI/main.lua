@@ -1,31 +1,8 @@
 -- ╔══════════════════════════════════════════════════════════════╗
--- ║                    HOOKED+ v1.0.3 PERFECT                      ║
+-- ║              HOOKED+ v1.0.3 MODERN BLACK & WHITE              ║
 -- ║          100% Fish It! Script - February 9, 2026              ║
 -- ║                  discord.gg/getsades                           ║
 -- ╚══════════════════════════════════════════════════════════════╝
-
---[[
-    VERIFIED FISH IT! MECHANICS:
-    1. Click to charge up
-    2. Rapid click to catch
-    3. Auto-Fishing available
-    4. Luck system affects catch quality
-    5. Multiple fish per cast possible with good luck
-    
-    REAL FISH IT! LOCATIONS (Feb 2026):
-    - Fisherman Island (spawn)
-    - Kohana Island + Kohana Volcano
-    - Tropical Grove (waterfall area)
-    - Coral Reef Island
-    - Esoteric Depths
-    - Crater Island
-    - Lost Isle (underwater)
-    - Ancient Jungle
-    - Classic Island
-    - Pirate Cove
-    - Lava Basin (NEW 8 Feb 2026)
-    - Crystal Depths
-]]
 
 -- Anti-Duplicate
 if game:GetService("CoreGui"):FindFirstChild("HookedPlusUI") then
@@ -53,35 +30,44 @@ local Character = Player.Character or Player.CharacterAdded:Wait()
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
 -- ════════════════════════════════════════════════════════════════
---                    ULTRA DARK MODERN THEME
+--                 MODERN BLACK & WHITE THEME
 -- ════════════════════════════════════════════════════════════════
 
 local Theme = {
-    Background      = Color3.fromRGB(15, 15, 18),
-    Sidebar         = Color3.fromRGB(18, 18, 22),
-    SidebarItem     = Color3.fromRGB(23, 23, 28),
-    SidebarHover    = Color3.fromRGB(28, 28, 34),
-    SidebarActive   = Color3.fromRGB(33, 33, 40),
-    TopBar          = Color3.fromRGB(18, 18, 22),
-    ContentBg       = Color3.fromRGB(15, 15, 18),
-    Section         = Color3.fromRGB(21, 21, 26),
-    SectionHeader   = Color3.fromRGB(23, 23, 28),
-    InputField      = Color3.fromRGB(28, 28, 34),
-    InputFocus      = Color3.fromRGB(33, 33, 40),
-    ToggleOff       = Color3.fromRGB(33, 33, 40),
-    ToggleOn        = Color3.fromRGB(76, 175, 80),
-    Primary         = Color3.fromRGB(76, 175, 80),
-    PrimaryDark     = Color3.fromRGB(56, 142, 60),
-    Success         = Color3.fromRGB(76, 175, 80),
-    Danger          = Color3.fromRGB(244, 67, 54),
-    Warning         = Color3.fromRGB(255, 152, 0),
-    TextPrimary     = Color3.fromRGB(255, 255, 255),
-    TextSecondary   = Color3.fromRGB(175, 175, 185),
-    TextMuted       = Color3.fromRGB(115, 115, 125),
-    Border          = Color3.fromRGB(38, 38, 46),
-    Divider         = Color3.fromRGB(28, 28, 34),
-    ScrollBar       = Color3.fromRGB(55, 55, 65),
-    Accent          = Color3.fromRGB(76, 175, 80),
+    -- Main Colors (Black & White)
+    Background      = Color3.fromRGB(18, 18, 18),      -- Dark background
+    Sidebar         = Color3.fromRGB(22, 22, 22),      -- Slightly lighter
+    SidebarItem     = Color3.fromRGB(28, 28, 28),
+    SidebarHover    = Color3.fromRGB(35, 35, 35),
+    SidebarActive   = Color3.fromRGB(42, 42, 42),
+    TopBar          = Color3.fromRGB(20, 20, 20),
+    ContentBg       = Color3.fromRGB(18, 18, 18),
+    Section         = Color3.fromRGB(25, 25, 25),
+    SectionHeader   = Color3.fromRGB(28, 28, 28),
+    InputField      = Color3.fromRGB(32, 32, 32),
+    InputFocus      = Color3.fromRGB(40, 40, 40),
+    
+    -- Toggle Colors (B&W)
+    ToggleOff       = Color3.fromRGB(38, 38, 38),
+    ToggleOn        = Color3.fromRGB(220, 220, 220),   -- White when on
+    
+    -- Accent Colors (Grayscale)
+    Primary         = Color3.fromRGB(240, 240, 240),   -- Almost white
+    PrimaryDark     = Color3.fromRGB(200, 200, 200),   -- Gray
+    Success         = Color3.fromRGB(255, 255, 255),   -- Pure white
+    Danger          = Color3.fromRGB(160, 160, 160),   -- Gray
+    Warning         = Color3.fromRGB(180, 180, 180),   -- Light gray
+    
+    -- Text Colors
+    TextPrimary     = Color3.fromRGB(255, 255, 255),   -- White
+    TextSecondary   = Color3.fromRGB(180, 180, 180),   -- Light gray
+    TextMuted       = Color3.fromRGB(120, 120, 120),   -- Medium gray
+    
+    -- Borders & Dividers
+    Border          = Color3.fromRGB(45, 45, 45),
+    Divider         = Color3.fromRGB(35, 35, 35),
+    ScrollBar       = Color3.fromRGB(60, 60, 60),
+    Accent          = Color3.fromRGB(240, 240, 240),
 }
 
 -- ════════════════════════════════════════════════════════════════
@@ -640,16 +626,16 @@ ScreenGui.Parent = CoreGui
 
 local MinIcon = Instance.new("ImageButton")
 MinIcon.Name = "MinIcon"
-MinIcon.Size = UDim2.new(0, 48, 0, 48)
-MinIcon.Position = UDim2.new(0, 20, 0.5, -24)
+MinIcon.Size = UDim2.new(0, 44, 0, 44)
+MinIcon.Position = UDim2.new(0, 20, 0.5, -22)
 MinIcon.BackgroundColor3 = Theme.Primary
 MinIcon.BorderSizePixel = 0
 MinIcon.Image = "rbxassetid://6031097225"
-MinIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
+MinIcon.ImageColor3 = Color3.fromRGB(20, 20, 20)
 MinIcon.Visible = false
 MinIcon.ZIndex = 100
 MinIcon.Parent = ScreenGui
-AddCorner(MinIcon, 12)
+AddCorner(MinIcon, 10)
 
 local IconGlow = Instance.new("ImageLabel")
 IconGlow.Size = UDim2.new(1.3, 0, 1.3, 0)
@@ -702,47 +688,47 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 -- ════════════════════════════════════════════════════════════════
---            PERFECTLY CENTERED MAIN FRAME (520x370)
+--        COMPACT CENTERED MAIN FRAME (450x320) - SMALLER SIZE
 -- ════════════════════════════════════════════════════════════════
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 520, 0, 370)
+MainFrame.Size = UDim2.new(0, 450, 0, 320)  -- Lebih kecil dari 520x370
 MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.BackgroundColor3 = Theme.Background
 MainFrame.BorderSizePixel = 0
 MainFrame.ClipsDescendants = false
 MainFrame.Parent = ScreenGui
-AddCorner(MainFrame, 11)
+AddCorner(MainFrame, 10)
 AddStroke(MainFrame, Theme.Border, 1, 0.25)
 
 -- Shadow
 local Shadow = Instance.new("ImageLabel")
-Shadow.Size = UDim2.new(1, 48, 1, 48)
+Shadow.Size = UDim2.new(1, 40, 1, 40)
 Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
 Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
 Shadow.BackgroundTransparency = 1
 Shadow.Image = "rbxassetid://5028857084"
 Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
-Shadow.ImageTransparency = 0.35
+Shadow.ImageTransparency = 0.4
 Shadow.ZIndex = -1
 Shadow.ScaleType = Enum.ScaleType.Slice
 Shadow.SliceCenter = Rect.new(24, 24, 276, 276)
 Shadow.Parent = MainFrame
 
 -- ════════════════════════════════════════════════════════════════
---                      TOP BAR (42px)
+--                      TOP BAR (38px) - COMPACT
 -- ════════════════════════════════════════════════════════════════
 
 local TopBar = Instance.new("Frame")
 TopBar.Name = "TopBar"
-TopBar.Size = UDim2.new(1, 0, 0, 42)
+TopBar.Size = UDim2.new(1, 0, 0, 38)
 TopBar.BackgroundColor3 = Theme.TopBar
 TopBar.BorderSizePixel = 0
 TopBar.Parent = MainFrame
 
-local TopCorner = AddCorner(TopBar, 11)
+local TopCorner = AddCorner(TopBar, 10)
 
 local TopDiv = Instance.new("Frame")
 TopDiv.Size = UDim2.new(1, 0, 0, 1)
@@ -751,74 +737,77 @@ TopDiv.BackgroundColor3 = Theme.Divider
 TopDiv.BorderSizePixel = 0
 TopDiv.Parent = TopBar
 
--- Logo
-local Logo = Instance.new("ImageLabel")
-Logo.Size = UDim2.new(0, 22, 0, 22)
-Logo.Position = UDim2.new(0, 14, 0.5, -11)
+-- Logo (B&W Icon)
+local Logo = Instance.new("TextLabel")
+Logo.Size = UDim2.new(0, 20, 0, 20)
+Logo.Position = UDim2.new(0, 12, 0.5, -10)
 Logo.BackgroundTransparency = 1
-Logo.Image = "rbxassetid://6031097225"
-Logo.ImageColor3 = Theme.Primary
+Logo.Text = "◐"  -- Modern B&W icon
+Logo.TextColor3 = Theme.Primary
+Logo.TextSize = 18
+Logo.Font = Enum.Font.GothamBold
 Logo.Parent = TopBar
 
 -- Title
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(0, 95, 1, 0)
-Title.Position = UDim2.new(0, 42, 0, 0)
+Title.Size = UDim2.new(0, 90, 1, 0)
+Title.Position = UDim2.new(0, 38, 0, 0)
 Title.BackgroundTransparency = 1
 Title.Text = "Hooked+"
 Title.TextColor3 = Theme.TextPrimary
-Title.TextSize = 15
+Title.TextSize = 14
 Title.Font = Enum.Font.GothamBold
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = TopBar
 
 -- Version Badge
 local VerBadge = Instance.new("Frame")
-VerBadge.Size = UDim2.new(0, 68, 0, 23)
-VerBadge.Position = UDim2.new(0, 137, 0.5, -11.5)
+VerBadge.Size = UDim2.new(0, 62, 0, 20)
+VerBadge.Position = UDim2.new(0, 128, 0.5, -10)
 VerBadge.BackgroundColor3 = Theme.SidebarItem
 VerBadge.BorderSizePixel = 0
 VerBadge.Parent = TopBar
-AddCorner(VerBadge, 6)
+AddCorner(VerBadge, 5)
 AddStroke(VerBadge, Theme.Border, 1, 0.45)
 
 local VerIcon = Instance.new("TextLabel")
-VerIcon.Size = UDim2.new(0, 17, 1, 0)
-VerIcon.Position = UDim2.new(0, 4, 0, 0)
+VerIcon.Size = UDim2.new(0, 16, 1, 0)
+VerIcon.Position = UDim2.new(0, 3, 0, 0)
 VerIcon.BackgroundTransparency = 1
-VerIcon.Text = "🎣"
-VerIcon.TextSize = 10
+VerIcon.Text = "⬢"  -- Modern B&W icon
+VerIcon.TextColor3 = Theme.TextSecondary
+VerIcon.TextSize = 9
 VerIcon.Font = Enum.Font.GothamBold
 VerIcon.Parent = VerBadge
 
 local VerText = Instance.new("TextLabel")
-VerText.Size = UDim2.new(1, -21, 1, 0)
-VerText.Position = UDim2.new(0, 19, 0, 0)
+VerText.Size = UDim2.new(1, -19, 1, 0)
+VerText.Position = UDim2.new(0, 17, 0, 0)
 VerText.BackgroundTransparency = 1
 VerText.Text = "v1.0.3"
 VerText.TextColor3 = Theme.Primary
-VerText.TextSize = 10
+VerText.TextSize = 9
 VerText.Font = Enum.Font.GothamBold
 VerText.TextXAlignment = Enum.TextXAlignment.Left
 VerText.Parent = VerBadge
 
--- Status Indicator
+-- Status Indicator (B&W)
 local StatusFrame = Instance.new("Frame")
-StatusFrame.Size = UDim2.new(0, 88, 0, 25)
-StatusFrame.Position = UDim2.new(0.5, -44, 0.5, -12.5)
+StatusFrame.Size = UDim2.new(0, 80, 0, 22)
+StatusFrame.Position = UDim2.new(0.5, -40, 0.5, -11)
 StatusFrame.BackgroundColor3 = Theme.SidebarItem
 StatusFrame.BorderSizePixel = 0
 StatusFrame.Parent = TopBar
-AddCorner(StatusFrame, 6)
+AddCorner(StatusFrame, 5)
 AddStroke(StatusFrame, Theme.Border, 1, 0.45)
 
 local StatusDot = Instance.new("Frame")
-StatusDot.Size = UDim2.new(0, 7, 0, 7)
-StatusDot.Position = UDim2.new(0, 8, 0.5, -3.5)
+StatusDot.Size = UDim2.new(0, 6, 0, 6)
+StatusDot.Position = UDim2.new(0, 7, 0.5, -3)
 StatusDot.BackgroundColor3 = Theme.Success
 StatusDot.BorderSizePixel = 0
 StatusDot.Parent = StatusFrame
-AddCorner(StatusDot, 4)
+AddCorner(StatusDot, 3)
 
 -- Pulse animation
 task.spawn(function()
@@ -830,39 +819,39 @@ task.spawn(function()
 end)
 
 local StatusText = Instance.new("TextLabel")
-StatusText.Size = UDim2.new(1, -20, 1, 0)
-StatusText.Position = UDim2.new(0, 19, 0, 0)
+StatusText.Size = UDim2.new(1, -18, 1, 0)
+StatusText.Position = UDim2.new(0, 17, 0, 0)
 StatusText.BackgroundTransparency = 1
 StatusText.Text = "Active"
-StatusText.TextColor3 = Theme.Success
-StatusText.TextSize = 11
+StatusText.TextColor3 = Theme.TextPrimary
+StatusText.TextSize = 10
 StatusText.Font = Enum.Font.GothamBold
 StatusText.TextXAlignment = Enum.TextXAlignment.Left
 StatusText.Parent = StatusFrame
 
--- Window Controls
+-- Window Controls (B&W)
 local Controls = Instance.new("Frame")
-Controls.Size = UDim2.new(0, 92, 0, 29)
-Controls.Position = UDim2.new(1, -100, 0.5, -14.5)
+Controls.Size = UDim2.new(0, 85, 0, 26)
+Controls.Position = UDim2.new(1, -92, 0.5, -13)
 Controls.BackgroundTransparency = 1
 Controls.Parent = TopBar
 
-local controlLayout = AddLayout(Controls, Enum.FillDirection.Horizontal, 5)
+local controlLayout = AddLayout(Controls, Enum.FillDirection.Horizontal, 4)
 controlLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 controlLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
 local function CreateControlBtn(text, color)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 27, 0, 27)
+    btn.Size = UDim2.new(0, 25, 0, 25)
     btn.BackgroundColor3 = Theme.SidebarItem
     btn.BorderSizePixel = 0
     btn.Text = text
     btn.TextColor3 = Theme.TextSecondary
-    btn.TextSize = 13
+    btn.TextSize = 12
     btn.Font = Enum.Font.GothamBold
     btn.AutoButtonColor = false
     btn.Parent = Controls
-    AddCorner(btn, 6)
+    AddCorner(btn, 5)
     AddStroke(btn, Theme.Border, 1, 0.45)
     
     btn.MouseEnter:Connect(function()
@@ -889,7 +878,7 @@ MinBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
     MinIcon.Visible = true
     MinIcon.Size = UDim2.new(0, 0, 0, 0)
-    Tween(MinIcon, BounceTween, {Size = UDim2.new(0, 48, 0, 48)})
+    Tween(MinIcon, BounceTween, {Size = UDim2.new(0, 44, 0, 44)})
 end)
 
 -- Restore
@@ -905,7 +894,7 @@ MinIcon.MouseButton1Click:Connect(function()
     MinIcon.Visible = false
     MainFrame.Visible = true
     MainFrame.Size = UDim2.new(0, 0, 0, 0)
-    Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 520, 0, 370)})
+    Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 450, 0, 320)})
 end)
 
 -- Close
@@ -945,13 +934,13 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 
 -- ════════════════════════════════════════════════════════════════
---                      SIDEBAR (150px)
+--                      SIDEBAR (130px) - COMPACT
 -- ════════════════════════════════════════════════════════════════
 
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
-Sidebar.Size = UDim2.new(0, 150, 1, -42)
-Sidebar.Position = UDim2.new(0, 0, 0, 42)
+Sidebar.Size = UDim2.new(0, 130, 1, -38)
+Sidebar.Position = UDim2.new(0, 0, 0, 38)
 Sidebar.BackgroundColor3 = Theme.Sidebar
 Sidebar.BorderSizePixel = 0
 Sidebar.Parent = MainFrame
@@ -965,32 +954,32 @@ SideDiv.Parent = Sidebar
 
 -- Search
 local SearchFrame = Instance.new("Frame")
-SearchFrame.Size = UDim2.new(1, -14, 0, 31)
-SearchFrame.Position = UDim2.new(0, 7, 0, 7)
+SearchFrame.Size = UDim2.new(1, -12, 0, 28)
+SearchFrame.Position = UDim2.new(0, 6, 0, 6)
 SearchFrame.BackgroundColor3 = Theme.InputField
 SearchFrame.BorderSizePixel = 0
 SearchFrame.Parent = Sidebar
-AddCorner(SearchFrame, 6)
+AddCorner(SearchFrame, 5)
 AddStroke(SearchFrame, Theme.Border, 1, 0.45)
 
 local SearchIcon = Instance.new("TextLabel")
-SearchIcon.Size = UDim2.new(0, 27, 1, 0)
+SearchIcon.Size = UDim2.new(0, 24, 1, 0)
 SearchIcon.BackgroundTransparency = 1
-SearchIcon.Text = "🔍"
+SearchIcon.Text = "⌕"  -- Modern B&W search icon
 SearchIcon.TextSize = 11
 SearchIcon.TextColor3 = Theme.TextMuted
-SearchIcon.Font = Enum.Font.Gotham
+SearchIcon.Font = Enum.Font.GothamBold
 SearchIcon.Parent = SearchFrame
 
 local SearchBox = Instance.new("TextBox")
-SearchBox.Size = UDim2.new(1, -30, 1, 0)
-SearchBox.Position = UDim2.new(0, 29, 0, 0)
+SearchBox.Size = UDim2.new(1, -26, 1, 0)
+SearchBox.Position = UDim2.new(0, 25, 0, 0)
 SearchBox.BackgroundTransparency = 1
 SearchBox.PlaceholderText = "Search..."
 SearchBox.Text = ""
 SearchBox.TextColor3 = Theme.TextPrimary
 SearchBox.PlaceholderColor3 = Theme.TextMuted
-SearchBox.TextSize = 10
+SearchBox.TextSize = 9
 SearchBox.Font = Enum.Font.Gotham
 SearchBox.TextXAlignment = Enum.TextXAlignment.Left
 SearchBox.ClearTextOnFocus = false
@@ -998,17 +987,17 @@ SearchBox.Parent = SearchFrame
 
 -- Nav Scroll
 local NavScroll = Instance.new("ScrollingFrame")
-NavScroll.Size = UDim2.new(1, 0, 1, -46)
-NavScroll.Position = UDim2.new(0, 0, 0, 45)
+NavScroll.Size = UDim2.new(1, 0, 1, -41)
+NavScroll.Position = UDim2.new(0, 0, 0, 40)
 NavScroll.BackgroundTransparency = 1
 NavScroll.BorderSizePixel = 0
-NavScroll.ScrollBarThickness = 4
+NavScroll.ScrollBarThickness = 3
 NavScroll.ScrollBarImageColor3 = Theme.ScrollBar
 NavScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 NavScroll.Parent = Sidebar
 
-local NavLayout = AddLayout(NavScroll, Enum.FillDirection.Vertical, 3)
-AddPadding(NavScroll, 7)
+local NavLayout = AddLayout(NavScroll, Enum.FillDirection.Vertical, 2)
+AddPadding(NavScroll, 6)
 
 -- ════════════════════════════════════════════════════════════════
 --                      CONTENT AREA
@@ -1016,8 +1005,8 @@ AddPadding(NavScroll, 7)
 
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
-ContentArea.Size = UDim2.new(1, -150, 1, -42)
-ContentArea.Position = UDim2.new(0, 150, 0, 42)
+ContentArea.Size = UDim2.new(1, -130, 1, -38)
+ContentArea.Position = UDim2.new(0, 130, 0, 38)
 ContentArea.BackgroundColor3 = Theme.ContentBg
 ContentArea.BorderSizePixel = 0
 ContentArea.ClipsDescendants = true
@@ -1034,7 +1023,7 @@ local currentPage = nil
 local function CreateNavButton(name, icon, order)
     local btn = Instance.new("TextButton")
     btn.Name = name .. "Nav"
-    btn.Size = UDim2.new(1, 0, 0, 33)
+    btn.Size = UDim2.new(1, 0, 0, 30)
     btn.BackgroundColor3 = Theme.SidebarItem
     btn.BackgroundTransparency = 1
     btn.BorderSizePixel = 0
@@ -1042,25 +1031,25 @@ local function CreateNavButton(name, icon, order)
     btn.AutoButtonColor = false
     btn.LayoutOrder = order
     btn.Parent = NavScroll
-    AddCorner(btn, 6)
+    AddCorner(btn, 5)
     
     local iconLabel = Instance.new("TextLabel")
-    iconLabel.Size = UDim2.new(0, 27, 1, 0)
-    iconLabel.Position = UDim2.new(0, 5, 0, 0)
+    iconLabel.Size = UDim2.new(0, 24, 1, 0)
+    iconLabel.Position = UDim2.new(0, 4, 0, 0)
     iconLabel.BackgroundTransparency = 1
     iconLabel.Text = icon
-    iconLabel.TextSize = 12
+    iconLabel.TextSize = 11
     iconLabel.TextColor3 = Theme.TextMuted
-    iconLabel.Font = Enum.Font.Gotham
+    iconLabel.Font = Enum.Font.GothamBold
     iconLabel.Parent = btn
     
     local textLabel = Instance.new("TextLabel")
     textLabel.Name = "Label"
-    textLabel.Size = UDim2.new(1, -34, 1, 0)
-    textLabel.Position = UDim2.new(0, 31, 0, 0)
+    textLabel.Size = UDim2.new(1, -30, 1, 0)
+    textLabel.Position = UDim2.new(0, 27, 0, 0)
     textLabel.BackgroundTransparency = 1
     textLabel.Text = name
-    textLabel.TextSize = 11
+    textLabel.TextSize = 10
     textLabel.TextColor3 = Theme.TextSecondary
     textLabel.Font = Enum.Font.Gotham
     textLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -1069,13 +1058,13 @@ local function CreateNavButton(name, icon, order)
     
     local activeBar = Instance.new("Frame")
     activeBar.Name = "ActiveBar"
-    activeBar.Size = UDim2.new(0, 3, 0.58, 0)
-    activeBar.Position = UDim2.new(0, 0, 0.21, 0)
+    activeBar.Size = UDim2.new(0, 2, 0.6, 0)
+    activeBar.Position = UDim2.new(0, 0, 0.2, 0)
     activeBar.BackgroundColor3 = Theme.Primary
     activeBar.BorderSizePixel = 0
     activeBar.Visible = false
     activeBar.Parent = btn
-    AddCorner(activeBar, 2)
+    AddCorner(activeBar, 1)
     
     btn.MouseEnter:Connect(function()
         if currentPage ~= name then
@@ -1107,17 +1096,17 @@ local function CreatePage(name)
     page.Size = UDim2.new(1, 0, 1, 0)
     page.BackgroundTransparency = 1
     page.BorderSizePixel = 0
-    page.ScrollBarThickness = 4
+    page.ScrollBarThickness = 3
     page.ScrollBarImageColor3 = Theme.ScrollBar
     page.CanvasSize = UDim2.new(0, 0, 0, 0)
     page.Visible = false
     page.Parent = ContentArea
     
-    local layout = AddLayout(page, Enum.FillDirection.Vertical, 9)
-    AddPadding(page, 11)
+    local layout = AddLayout(page, Enum.FillDirection.Vertical, 8)
+    AddPadding(page, 10)
     
     layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 26)
+        page.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 24)
     end)
     
     Pages[name] = page
@@ -1163,61 +1152,61 @@ local function CreateSection(parent, title, order, defaultExpanded)
     section.LayoutOrder = order
     section.ClipsDescendants = true
     section.Parent = parent
-    AddCorner(section, 8)
+    AddCorner(section, 7)
     AddStroke(section, Theme.Border, 1, 0.3)
     
     local header = Instance.new("TextButton")
     header.Name = "Header"
-    header.Size = UDim2.new(1, 0, 0, 38)
+    header.Size = UDim2.new(1, 0, 0, 34)
     header.BackgroundColor3 = Theme.SectionHeader
     header.BackgroundTransparency = 0.25
     header.BorderSizePixel = 0
     header.Text = ""
     header.AutoButtonColor = false
     header.Parent = section
-    AddCorner(header, 8)
+    AddCorner(header, 7)
     
     local titleLabel = Instance.new("TextLabel")
-    titleLabel.Size = UDim2.new(1, -52, 1, 0)
-    titleLabel.Position = UDim2.new(0, 15, 0, 0)
+    titleLabel.Size = UDim2.new(1, -48, 1, 0)
+    titleLabel.Position = UDim2.new(0, 13, 0, 0)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Text = title
     titleLabel.TextColor3 = Theme.TextPrimary
-    titleLabel.TextSize = 12
+    titleLabel.TextSize = 11
     titleLabel.Font = Enum.Font.GothamBold
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
     titleLabel.Parent = header
     
     local arrow = Instance.new("TextLabel")
-    arrow.Size = UDim2.new(0, 21, 0, 21)
-    arrow.Position = UDim2.new(1, -33, 0.5, -10.5)
+    arrow.Size = UDim2.new(0, 19, 0, 19)
+    arrow.Position = UDim2.new(1, -30, 0.5, -9.5)
     arrow.BackgroundTransparency = 1
-    arrow.Text = defaultExpanded and "∧" or "∨"
+    arrow.Text = defaultExpanded and "▲" or "▼"
     arrow.TextColor3 = Theme.TextSecondary
-    arrow.TextSize = 14
+    arrow.TextSize = 10
     arrow.Font = Enum.Font.GothamBold
     arrow.Parent = header
     
     local content = Instance.new("Frame")
     content.Name = "Content"
     content.Size = UDim2.new(1, 0, 0, 0)
-    content.Position = UDim2.new(0, 0, 0, 38)
+    content.Position = UDim2.new(0, 0, 0, 34)
     content.BackgroundTransparency = 1
     content.ClipsDescendants = true
     content.Parent = section
     
-    local contentLayout = AddLayout(content, Enum.FillDirection.Vertical, 7)
-    AddPadding(content, 11)
+    local contentLayout = AddLayout(content, Enum.FillDirection.Vertical, 6)
+    AddPadding(content, 10)
     
     local expanded = defaultExpanded or false
     
     local function updateSize()
-        local h = contentLayout.AbsoluteContentSize.Y + 22
+        local h = contentLayout.AbsoluteContentSize.Y + 20
         if expanded then
-            section.Size = UDim2.new(1, 0, 0, 38 + h)
+            section.Size = UDim2.new(1, 0, 0, 34 + h)
             content.Size = UDim2.new(1, 0, 0, h)
         else
-            section.Size = UDim2.new(1, 0, 0, 38)
+            section.Size = UDim2.new(1, 0, 0, 34)
             content.Size = UDim2.new(1, 0, 0, 0)
         end
     end
@@ -1228,15 +1217,15 @@ local function CreateSection(parent, title, order, defaultExpanded)
             updateSize()
         end)
     else
-        section.Size = UDim2.new(1, 0, 0, 38)
+        section.Size = UDim2.new(1, 0, 0, 34)
     end
     
     header.MouseButton1Click:Connect(function()
         expanded = not expanded
-        arrow.Text = expanded and "∧" or "∨"
+        arrow.Text = expanded and "▲" or "▼"
         
-        local h = contentLayout.AbsoluteContentSize.Y + 22
-        local targetH = expanded and (38 + h) or 38
+        local h = contentLayout.AbsoluteContentSize.Y + 20
+        local targetH = expanded and (34 + h) or 34
         local targetC = expanded and h or 0
         
         Tween(section, SmoothTween, {Size = UDim2.new(1, 0, 0, targetH)})
@@ -1245,8 +1234,8 @@ local function CreateSection(parent, title, order, defaultExpanded)
     
     contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         if expanded then
-            local h = contentLayout.AbsoluteContentSize.Y + 22
-            section.Size = UDim2.new(1, 0, 0, 38 + h)
+            local h = contentLayout.AbsoluteContentSize.Y + 20
+            section.Size = UDim2.new(1, 0, 0, 34 + h)
             content.Size = UDim2.new(1, 0, 0, h)
         end
     end)
@@ -1264,28 +1253,28 @@ end
 local function CreateToggle(parent, name, default, callback, desc)
     local toggle = Instance.new("Frame")
     toggle.Name = name:gsub(" ", "")
-    toggle.Size = UDim2.new(1, 0, 0, desc and 44 or 31)
+    toggle.Size = UDim2.new(1, 0, 0, desc and 40 or 28)
     toggle.BackgroundTransparency = 1
     toggle.Parent = parent
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -62, 0, 19)
+    label.Size = UDim2.new(1, -56, 0, 17)
     label.BackgroundTransparency = 1
     label.Text = name
     label.TextColor3 = Theme.TextPrimary
-    label.TextSize = 11
+    label.TextSize = 10
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = toggle
     
     if desc then
         local descLabel = Instance.new("TextLabel")
-        descLabel.Size = UDim2.new(1, -62, 0, 19)
-        descLabel.Position = UDim2.new(0, 0, 0, 21)
+        descLabel.Size = UDim2.new(1, -56, 0, 17)
+        descLabel.Position = UDim2.new(0, 0, 0, 19)
         descLabel.BackgroundTransparency = 1
         descLabel.Text = desc
         descLabel.TextColor3 = Theme.TextMuted
-        descLabel.TextSize = 9
+        descLabel.TextSize = 8
         descLabel.Font = Enum.Font.Gotham
         descLabel.TextXAlignment = Enum.TextXAlignment.Left
         descLabel.TextWrapped = true
@@ -1293,29 +1282,32 @@ local function CreateToggle(parent, name, default, callback, desc)
     end
     
     local btnFrame = Instance.new("TextButton")
-    btnFrame.Size = UDim2.new(0, 43, 0, 23)
-    btnFrame.Position = UDim2.new(1, -43, 0, desc and 10.5 or 4)
+    btnFrame.Size = UDim2.new(0, 39, 0, 21)
+    btnFrame.Position = UDim2.new(1, -39, 0, desc and 9.5 or 3.5)
     btnFrame.BackgroundColor3 = default and Theme.ToggleOn or Theme.ToggleOff
     btnFrame.BorderSizePixel = 0
     btnFrame.Text = ""
     btnFrame.AutoButtonColor = false
     btnFrame.Parent = toggle
-    AddCorner(btnFrame, 11.5)
+    AddCorner(btnFrame, 10.5)
     
     local knob = Instance.new("Frame")
-    knob.Size = UDim2.new(0, 17, 0, 17)
-    knob.Position = default and UDim2.new(1, -20, 0.5, -8.5) or UDim2.new(0, 3, 0.5, -8.5)
-    knob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    knob.Size = UDim2.new(0, 15, 0, 15)
+    knob.Position = default and UDim2.new(1, -18, 0.5, -7.5) or UDim2.new(0, 3, 0.5, -7.5)
+    knob.BackgroundColor3 = default and Color3.fromRGB(20, 20, 20) or Color3.fromRGB(255, 255, 255)
     knob.BorderSizePixel = 0
     knob.Parent = btnFrame
-    AddCorner(knob, 8.5)
+    AddCorner(knob, 7.5)
     
     local state = default
     
     btnFrame.MouseButton1Click:Connect(function()
         state = not state
         Tween(btnFrame, QuickTween, {BackgroundColor3 = state and Theme.ToggleOn or Theme.ToggleOff})
-        Tween(knob, QuickTween, {Position = state and UDim2.new(1, -20, 0.5, -8.5) or UDim2.new(0, 3, 0.5, -8.5)})
+        Tween(knob, QuickTween, {
+            Position = state and UDim2.new(1, -18, 0.5, -7.5) or UDim2.new(0, 3, 0.5, -7.5),
+            BackgroundColor3 = state and Color3.fromRGB(20, 20, 20) or Color3.fromRGB(255, 255, 255)
+        })
         if callback then callback(state) end
     end)
     
@@ -1325,32 +1317,32 @@ end
 local function CreateInput(parent, name, default, callback)
     local input = Instance.new("Frame")
     input.Name = name:gsub(" ", "")
-    input.Size = UDim2.new(1, 0, 0, 31)
+    input.Size = UDim2.new(1, 0, 0, 28)
     input.BackgroundTransparency = 1
     input.Parent = parent
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(0.56, 0, 1, 0)
+    label.Size = UDim2.new(0.54, 0, 1, 0)
     label.BackgroundTransparency = 1
     label.Text = name
     label.TextColor3 = Theme.TextPrimary
-    label.TextSize = 11
+    label.TextSize = 10
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = input
     
     local box = Instance.new("TextBox")
-    box.Size = UDim2.new(0.4, 0, 0, 27)
-    box.Position = UDim2.new(0.6, 0, 0.5, -13.5)
+    box.Size = UDim2.new(0.42, 0, 0, 24)
+    box.Position = UDim2.new(0.58, 0, 0.5, -12)
     box.BackgroundColor3 = Theme.InputField
     box.BorderSizePixel = 0
     box.Text = tostring(default)
     box.TextColor3 = Theme.TextPrimary
-    box.TextSize = 11
+    box.TextSize = 10
     box.Font = Enum.Font.GothamBold
     box.ClearTextOnFocus = true
     box.Parent = input
-    AddCorner(box, 6)
+    AddCorner(box, 5)
     AddStroke(box, Theme.Border, 1, 0.45)
     
     box.Focused:Connect(function()
@@ -1373,50 +1365,50 @@ end
 local function CreateDropdown(parent, name, options, default, callback)
     local dropdown = Instance.new("Frame")
     dropdown.Name = name:gsub(" ", "")
-    dropdown.Size = UDim2.new(1, 0, 0, 50)
+    dropdown.Size = UDim2.new(1, 0, 0, 46)
     dropdown.BackgroundTransparency = 1
     dropdown.ClipsDescendants = false
     dropdown.Parent = parent
     
     local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(0.47, 0, 0, 19)
+    label.Size = UDim2.new(0.45, 0, 0, 17)
     label.BackgroundTransparency = 1
     label.Text = name
     label.TextColor3 = Theme.TextPrimary
-    label.TextSize = 11
+    label.TextSize = 10
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
     label.TextWrapped = true
     label.Parent = dropdown
     
     local btnContainer = Instance.new("Frame")
-    btnContainer.Size = UDim2.new(0.49, 0, 0, 29)
-    btnContainer.Position = UDim2.new(0.51, 0, 0, 17)
+    btnContainer.Size = UDim2.new(0.51, 0, 0, 26)
+    btnContainer.Position = UDim2.new(0.49, 0, 0, 16)
     btnContainer.BackgroundColor3 = Theme.InputField
     btnContainer.BorderSizePixel = 0
     btnContainer.Parent = dropdown
-    AddCorner(btnContainer, 6)
+    AddCorner(btnContainer, 5)
     AddStroke(btnContainer, Theme.Border, 1, 0.45)
     
     local selected = Instance.new("TextLabel")
-    selected.Size = UDim2.new(1, -29, 1, 0)
-    selected.Position = UDim2.new(0, 9, 0, 0)
+    selected.Size = UDim2.new(1, -26, 1, 0)
+    selected.Position = UDim2.new(0, 8, 0, 0)
     selected.BackgroundTransparency = 1
     selected.Text = default or options[1] or "--"
     selected.TextColor3 = Theme.TextPrimary
-    selected.TextSize = 10
+    selected.TextSize = 9
     selected.Font = Enum.Font.Gotham
     selected.TextXAlignment = Enum.TextXAlignment.Left
     selected.TextTruncate = Enum.TextTruncate.AtEnd
     selected.Parent = btnContainer
     
     local arrow = Instance.new("TextLabel")
-    arrow.Size = UDim2.new(0, 21, 1, 0)
-    arrow.Position = UDim2.new(1, -23, 0, 0)
+    arrow.Size = UDim2.new(0, 19, 1, 0)
+    arrow.Position = UDim2.new(1, -21, 0, 0)
     arrow.BackgroundTransparency = 1
-    arrow.Text = "⇅"
+    arrow.Text = "▾"
     arrow.TextColor3 = Theme.TextMuted
-    arrow.TextSize = 10
+    arrow.TextSize = 9
     arrow.Font = Enum.Font.GothamBold
     arrow.Parent = btnContainer
     
@@ -1428,30 +1420,30 @@ local function CreateDropdown(parent, name, options, default, callback)
     
     local optionsList = Instance.new("Frame")
     optionsList.Size = UDim2.new(1, 0, 0, 0)
-    optionsList.Position = UDim2.new(0, 0, 1, 3)
+    optionsList.Position = UDim2.new(0, 0, 1, 2)
     optionsList.BackgroundColor3 = Theme.Section
     optionsList.BorderSizePixel = 0
     optionsList.Visible = false
     optionsList.ClipsDescendants = true
     optionsList.ZIndex = 50
     optionsList.Parent = btnContainer
-    AddCorner(optionsList, 6)
+    AddCorner(optionsList, 5)
     AddStroke(optionsList, Theme.Border, 1, 0.25)
     
     local optLayout = AddLayout(optionsList, Enum.FillDirection.Vertical, 2)
-    AddPadding(optionsList, 4)
+    AddPadding(optionsList, 3)
     
     local expanded = false
     
     for _, opt in ipairs(options) do
         local optBtn = Instance.new("TextButton")
-        optBtn.Size = UDim2.new(1, 0, 0, 27)
+        optBtn.Size = UDim2.new(1, 0, 0, 24)
         optBtn.BackgroundColor3 = Theme.InputField
         optBtn.BackgroundTransparency = 1
         optBtn.BorderSizePixel = 0
         optBtn.Text = opt
         optBtn.TextColor3 = Theme.TextSecondary
-        optBtn.TextSize = 10
+        optBtn.TextSize = 9
         optBtn.Font = Enum.Font.Gotham
         optBtn.AutoButtonColor = false
         optBtn.ZIndex = 51
@@ -1460,7 +1452,7 @@ local function CreateDropdown(parent, name, options, default, callback)
         
         optBtn.MouseEnter:Connect(function()
             Tween(optBtn, QuickTween, {BackgroundTransparency = 0, BackgroundColor3 = Theme.Primary})
-            optBtn.TextColor3 = Theme.TextPrimary
+            optBtn.TextColor3 = Color3.fromRGB(20, 20, 20)
         end)
         
         optBtn.MouseLeave:Connect(function()
@@ -1481,7 +1473,7 @@ local function CreateDropdown(parent, name, options, default, callback)
         expanded = not expanded
         if expanded then
             optionsList.Visible = true
-            local h = math.min(#options * 29 + 8, 215)
+            local h = math.min(#options * 26 + 6, 200)
             Tween(optionsList, QuickTween, {Size = UDim2.new(1, 0, 0, h)})
         else
             Tween(optionsList, QuickTween, {Size = UDim2.new(1, 0, 0, 0)}).Completed:Wait()
@@ -1494,16 +1486,16 @@ end
 
 local function CreateButton(parent, name, callback)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(1, 0, 0, 33)
+    btn.Size = UDim2.new(1, 0, 0, 30)
     btn.BackgroundColor3 = Theme.Primary
     btn.BorderSizePixel = 0
     btn.Text = name
-    btn.TextColor3 = Theme.TextPrimary
-    btn.TextSize = 12
+    btn.TextColor3 = Color3.fromRGB(20, 20, 20)
+    btn.TextSize = 11
     btn.Font = Enum.Font.GothamBold
     btn.AutoButtonColor = false
     btn.Parent = parent
-    AddCorner(btn, 7)
+    AddCorner(btn, 6)
     
     btn.MouseEnter:Connect(function()
         Tween(btn, QuickTween, {BackgroundColor3 = Theme.PrimaryDark})
@@ -1520,26 +1512,26 @@ local function CreateButton(parent, name, callback)
 end
 
 -- ════════════════════════════════════════════════════════════════
---                      BUILD NAVIGATION
+--                      BUILD NAVIGATION (B&W ICONS)
 -- ════════════════════════════════════════════════════════════════
 
-CreateNavButton("Local Player", "👤", 1)
-CreateNavButton("Main", "🏠", 2)
-CreateNavButton("Zone Fishing", "🎣", 3)
-CreateNavButton("Performance", "⚡", 4)
+CreateNavButton("Local Player", "●", 1)
+CreateNavButton("Main", "■", 2)
+CreateNavButton("Zone Fishing", "◆", 3)
+CreateNavButton("Performance", "▲", 4)
 
 -- Separator
 local sep = Instance.new("Frame")
-sep.Size = UDim2.new(1, -14, 0, 1)
+sep.Size = UDim2.new(1, -12, 0, 1)
 sep.BackgroundColor3 = Theme.Divider
 sep.BorderSizePixel = 0
 sep.LayoutOrder = 5
 sep.Parent = NavScroll
 
-CreateNavButton("Stats", "📊", 6)
+CreateNavButton("Stats", "▣", 6)
 
 NavLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    NavScroll.CanvasSize = UDim2.new(0, 0, 0, NavLayout.AbsoluteContentSize.Y + 17)
+    NavScroll.CanvasSize = UDim2.new(0, 0, 0, NavLayout.AbsoluteContentSize.Y + 15)
 end)
 
 -- ════════════════════════════════════════════════════════════════
@@ -1590,7 +1582,7 @@ CreateToggle(legitSection, "Enable Auto Fishing", false, function(v)
 end)
 CreateToggle(legitSection, "Auto Click", false, function(v)
     Settings.AutoClick = v
-end, "Rapid auto clicking (Fish It mechanic)")
+end, "Rapid auto clicking")
 CreateInput(legitSection, "Click Speed (CPS)", 20, function(v)
     Settings.ClickSpeed = v
 end)
@@ -1691,19 +1683,19 @@ local statsPage = CreatePage("Stats")
 local statsSection = CreateSection(statsPage, "Session Statistics", 1, true)
 
 local statsDisplay = Instance.new("Frame")
-statsDisplay.Size = UDim2.new(1, 0, 0, 125)
+statsDisplay.Size = UDim2.new(1, 0, 0, 115)
 statsDisplay.BackgroundColor3 = Theme.SidebarItem
 statsDisplay.BorderSizePixel = 0
 statsDisplay.Parent = statsSection
-AddCorner(statsDisplay, 8)
+AddCorner(statsDisplay, 7)
 AddStroke(statsDisplay, Theme.Border, 1, 0.3)
 
-local statLayout = AddLayout(statsDisplay, Enum.FillDirection.Vertical, 9)
-AddPadding(statsDisplay, 13)
+local statLayout = AddLayout(statsDisplay, Enum.FillDirection.Vertical, 8)
+AddPadding(statsDisplay, 12)
 
 local function CreateStat(name, value)
     local stat = Instance.new("Frame")
-    stat.Size = UDim2.new(1, 0, 0, 23)
+    stat.Size = UDim2.new(1, 0, 0, 21)
     stat.BackgroundTransparency = 1
     stat.Parent = statsDisplay
     
@@ -1712,7 +1704,7 @@ local function CreateStat(name, value)
     nameLabel.BackgroundTransparency = 1
     nameLabel.Text = name
     nameLabel.TextColor3 = Theme.TextSecondary
-    nameLabel.TextSize = 11
+    nameLabel.TextSize = 10
     nameLabel.Font = Enum.Font.Gotham
     nameLabel.TextXAlignment = Enum.TextXAlignment.Left
     nameLabel.Parent = stat
@@ -1723,7 +1715,7 @@ local function CreateStat(name, value)
     valueLabel.BackgroundTransparency = 1
     valueLabel.Text = tostring(value)
     valueLabel.TextColor3 = Theme.Primary
-    valueLabel.TextSize = 12
+    valueLabel.TextSize = 11
     valueLabel.Font = Enum.Font.GothamBold
     valueLabel.TextXAlignment = Enum.TextXAlignment.Right
     valueLabel.Parent = stat
@@ -1770,23 +1762,23 @@ SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 -- ════════════════════════════════════════════════════════════════
---                      NOTIFICATION SYSTEM
+--                      NOTIFICATION SYSTEM (B&W)
 -- ════════════════════════════════════════════════════════════════
 
 local function CreateNotification(title, message, duration, notifType)
     local notif = Instance.new("Frame")
-    notif.Size = UDim2.new(0, 295, 0, 73)
-    notif.Position = UDim2.new(1, 20, 1, -93)
+    notif.Size = UDim2.new(0, 270, 0, 68)
+    notif.Position = UDim2.new(1, 20, 1, -88)
     notif.BackgroundColor3 = Theme.Section
     notif.BorderSizePixel = 0
     notif.ZIndex = 200
     notif.Parent = ScreenGui
-    AddCorner(notif, 9)
+    AddCorner(notif, 8)
     AddStroke(notif, Theme.Border, 1, 0.2)
     
     local accent = Instance.new("Frame")
-    accent.Size = UDim2.new(0, 4, 0.68, 0)
-    accent.Position = UDim2.new(0, 7, 0.16, 0)
+    accent.Size = UDim2.new(0, 3, 0.7, 0)
+    accent.Position = UDim2.new(0, 6, 0.15, 0)
     accent.BackgroundColor3 = notifType == "success" and Theme.Success or notifType == "error" and Theme.Danger or Theme.Primary
     accent.BorderSizePixel = 0
     accent.ZIndex = 201
@@ -1794,24 +1786,24 @@ local function CreateNotification(title, message, duration, notifType)
     AddCorner(accent, 2)
     
     local titleLabel = Instance.new("TextLabel")
-    titleLabel.Size = UDim2.new(1, -27, 0, 23)
-    titleLabel.Position = UDim2.new(0, 17, 0, 9)
+    titleLabel.Size = UDim2.new(1, -24, 0, 21)
+    titleLabel.Position = UDim2.new(0, 15, 0, 8)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Text = title
     titleLabel.TextColor3 = Theme.TextPrimary
-    titleLabel.TextSize = 12
+    titleLabel.TextSize = 11
     titleLabel.Font = Enum.Font.GothamBold
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
     titleLabel.ZIndex = 201
     titleLabel.Parent = notif
     
     local msgLabel = Instance.new("TextLabel")
-    msgLabel.Size = UDim2.new(1, -27, 0, 31)
-    msgLabel.Position = UDim2.new(0, 17, 0, 33)
+    msgLabel.Size = UDim2.new(1, -24, 0, 29)
+    msgLabel.Position = UDim2.new(0, 15, 0, 30)
     msgLabel.BackgroundTransparency = 1
     msgLabel.Text = message
     msgLabel.TextColor3 = Theme.TextSecondary
-    msgLabel.TextSize = 10
+    msgLabel.TextSize = 9
     msgLabel.Font = Enum.Font.Gotham
     msgLabel.TextWrapped = true
     msgLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -1819,11 +1811,11 @@ local function CreateNotification(title, message, duration, notifType)
     msgLabel.ZIndex = 201
     msgLabel.Parent = notif
     
-    Tween(notif, SmoothTween, {Position = UDim2.new(1, -308, 1, -93)})
+    Tween(notif, SmoothTween, {Position = UDim2.new(1, -283, 1, -88)})
     
     wait(duration or 4)
     
-    Tween(notif, SmoothTween, {Position = UDim2.new(1, 20, 1, -93)}).Completed:Wait()
+    Tween(notif, SmoothTween, {Position = UDim2.new(1, 20, 1, -88)}).Completed:Wait()
     notif:Destroy()
 end
 
@@ -1841,14 +1833,14 @@ ShowPage("Main")
 
 -- Entrance animation
 MainFrame.Size = UDim2.new(0, 0, 0, 0)
-Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 520, 0, 370)})
+Tween(MainFrame, BounceTween, {Size = UDim2.new(0, 450, 0, 320)})
 
 -- Welcome notification
 task.spawn(function()
     wait(0.8)
     CreateNotification(
         "Hooked+ Ready",
-        "Fish It! v1.0.3 Perfect Edition\nAll systems operational ✓\n14 Real Locations Loaded",
+        "Fish It! v1.0.3 Modern B&W Edition\nAll systems operational ✓\n14 Real Locations Loaded",
         4.5,
         "success"
     )
@@ -1856,22 +1848,17 @@ end)
 
 -- Console
 print("╔══════════════════════════════════════════════════════════════╗")
-print("║                HOOKED+ v1.0.3 PERFECT                          ║")
+print("║           HOOKED+ v1.0.3 MODERN BLACK & WHITE                ║")
 print("║           100% Fish It! - February 9, 2026                    ║")
 print("╚══════════════════════════════════════════════════════════════╝")
 print("")
 print("✓ Status: Successfully Loaded")
-print("✓ UI: Perfectly Centered (520x370)")
+print("✓ UI: Modern B&W Design (450x320)")
+print("✓ Position: Perfectly Centered")
+print("✓ Theme: Black & White Modern")
+print("✓ Icons: Minimalist B&W Icons")
 print("✓ Game: Fish It! (100% Compatible)")
 print("✓ Locations:", #locationNames, "real Fish It! spots")
-print("✓ Mechanics: Click Charge + Rapid Click")
-print("✓ Features:")
-print("  ✓ Legit Mode (realistic timing)")
-print("  ✓ Blatant Mode (multi-fish catching)")
-print("  ✓ Instant Mode (fast fishing)")
-print("  ✓ Auto Clicking (Fish It mechanic)")
-print("  ✓ Auto Teleport (14 locations)")
-print("  ✓ Auto Selling")
 print("")
 print("discord.gg/getsades")
 print("═══════════════════════════════════════════════════════════════")
