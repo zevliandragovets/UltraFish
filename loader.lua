@@ -29,7 +29,7 @@ Notify("🎣 Hooked+", "Loading script...", 2)
 
 -- LOADSTRING METHOD (works with Delta)
 local success, result = pcall(function()
-    local scriptUrl = "https://raw.githubusercontent.com/YOUR-REPO/HookedPlus/main/script.lua"
+    local scriptUrl = "https://raw.githubusercontent.com/zevliandragovets/UltraFish/refs/heads/main/UI/main.lua"
     
     -- Try HTTP method first
     local httpSuccess, script = pcall(function()
@@ -55,3 +55,4 @@ else
     Notify("❌ Load Error", tostring(result), 8)
     warn("[Hooked+] Error:", result)
 end
+
