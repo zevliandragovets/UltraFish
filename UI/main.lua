@@ -913,6 +913,7 @@ print("✅ 100% FISH IT! MECHANICS")
 print("✅ ALL FEATURES WORKING")
 print("═══════════════════════════════════════════════════════════════")
     
+
 local function Tw(o,i,p) return Services.TweenService:Create(o,i,p) end
 local QT = TweenInfo.new(0.15, Enum.EasingStyle.Quad)
 local ST = TweenInfo.new(0.22, Enum.EasingStyle.Quint)
@@ -1886,4 +1887,3 @@ print("✅ MULTI-FISH BLATANT MODE (1-10)")
 print("✅ AUTO SELL & TELEPORT")
 print("✅ ALL VERIFIED FISH IT! LOCATIONS")
 print("═══════════════════════════════════════════════════════════════")
-
